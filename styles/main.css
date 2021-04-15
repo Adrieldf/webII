@@ -1,3 +1,36 @@
-.teste{
+.teste {
   color: white;
+}
+
+.cadastro-fornecedor-tabela{
+  margin: 0; 
+  padding: 0;
+}
+
+.cadastro-fornecedor-tabela-col1{
+  width: 5%;
+}
+
+.cadastro-fornecedor-tabela-col2{
+  width: 30%;
+}
+
+.cadastro-fornecedor-tabela-col3{
+  width: 30%;
+}
+
+.cadastro-fornecedor-tabela-col4{
+  width: 15%;
+}
+
+.cadastro-fornecedor-tabela-col5{
+  width: 20%;
+}
+
+.cadastro-fornecedor-container{
+  max-height: 250px;
+  width: 100%;
+  margin: 0; 
+  overflow-y: 
+  auto;
 }

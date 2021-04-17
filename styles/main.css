@@ -2,6 +2,10 @@
   color: white;
 }
 
+.cadastro-fornecedor-botao-pesquisar{
+  margin-top: 5%;
+}
+
 .cadastro-fornecedor-tabela{
   margin: 0; 
   padding: 0;
@@ -9,22 +13,32 @@
 
 .cadastro-fornecedor-tabela-col1{
   width: 5%;
+  text-align: center;
 }
 
 .cadastro-fornecedor-tabela-col2{
-  width: 30%;
+  width: 7%;
+  text-align: center;
 }
 
 .cadastro-fornecedor-tabela-col3{
-  width: 30%;
+  width: 28%;
 }
 
 .cadastro-fornecedor-tabela-col4{
-  width: 15%;
+  width: 28%;
 }
 
 .cadastro-fornecedor-tabela-col5{
-  width: 20%;
+  width: 15%;
+}
+
+.cadastro-fornecedor-tabela-col6{
+  width: 10%;
+}
+
+.cadastro-fornecedor-tabela-col7{
+  width: 7%;
 }
 
 .cadastro-fornecedor-container{
@@ -33,4 +47,9 @@
   margin: 0; 
   overflow-y: 
   auto;
+}
+
+.cadastro-fornecedor-form{
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

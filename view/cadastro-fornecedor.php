@@ -1,20 +1,16 @@
 <?php
 
+require_once __DIR__ . '\..\controller\MainController.php';
+require_once("header.php");
 
 ?>
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cadastros</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
-    <link href="../styles/main.css" rel="stylesheet">
-
-</head>
+<?php
+include("header.php");
+include("navbar.php");
+?>
 
 <body>
     <div class="container-fluid border">
@@ -186,9 +182,10 @@
             <a class="btn btn-success" href="path/to/settings" aria-label="Settings">
                 <i class="fa fa-save" aria-hidden="true"> Salvar</i>
             </a>
+            <!--
             <a class="btn btn-light" href="path/to/settings" aria-label="Settings">
                 <i class="fa fa-eraser"> Limpar</i>
-            </a>
+            </a>-->
         </form>
     </div>
 </body>

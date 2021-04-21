@@ -3,7 +3,7 @@
 
 class ClienteDao extends DAO
 {
-    private $table_name = 'cliente';
+    private $table_name = 'w2cliente';
 
     public function insert($cliente) {
 

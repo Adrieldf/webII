@@ -52,9 +52,9 @@ class ClienteDao extends DAO
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
             extract($row);
-            $usuario = new Cliente($id, $nome, $telefone, $email, $cartaoCredito);
-            $usuarios[] = $usuario;
+            $cliente = new Cliente($id, $nome, $telefone, $email, $cartaoCredito);
+            $clientes[] = $cliente;
         }
-        return $usuarios;
+        return $clientes;
     }
 }

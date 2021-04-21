@@ -2,6 +2,7 @@
 
 include_once('DaoFactory.php');
 include_once('ClienteDao.php');
+include_once('ProdutoDao.php');
 
 class PgDaoFactory extends DaoFactory
 {
@@ -24,9 +25,13 @@ class PgDaoFactory extends DaoFactory
         return $this->conn;
     }
 
-
     public function getClienteDao() {
 
         return new ClienteDao($this->getConnection());
+    }
+
+    public function getProdutoDao() {
+
+        return new ProdutoDao($this->getConnection());
     }
 }

@@ -1,14 +1,13 @@
 <?php
 
-include_once('dao/Dao.php');
+include_once('Dao.php');
 
-class ClienteDao extends DAO
+class ClienteDao extends Dao
 {
     private $table_name = 'w2cliente';
 
     public function insert($cliente)
     {
-
         $query = "INSERT INTO " . $this->table_name . " (nome, telefone, email1, cartaocredito) VALUES" . " (:nome, :telefone, :email, :cartaoCredito)";
 
         $stmt = $this->conn->prepare($query);
@@ -27,7 +26,6 @@ class ClienteDao extends DAO
         }catch ( PDOException $Exception){
             print_r($Exception->getMessage( ) . '' . $Exception->getCode( ));
         }
-
     }
 
     public function remove($cliente)

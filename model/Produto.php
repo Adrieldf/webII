@@ -12,12 +12,13 @@ class Produto
 
     private $itens;
 
-    public function __construct($id, $nome, $descricao, $foto)
+    public function __construct($id, $nome, $descricao, $foto, $fornecedor)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->descricao = $descricao;
         $this->foto = $foto;
+        $this->fornecedor = $fornecedor;
     }
 
     public function getId()

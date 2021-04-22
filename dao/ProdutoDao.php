@@ -8,7 +8,7 @@ class ProdutoDao extends Dao
 
     public function insert($produto)
     {
-        $query = "INSERT INTO " . $this->table_name . " (nome, descricao, foto) VALUES" . " (:nome, :descricao, :foto)";
+        $query = "INSERT INTO " . $this->table_name . " (nome, descricao, foto, fornecedor) VALUES" . " (:nome, :descricao, :foto, :fornecedor)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -16,6 +16,7 @@ class ProdutoDao extends Dao
         $stmt->bindValue(":nome", $produto->getNome());
         $stmt->bindValue(":descricao", $produto->getDescricao());
         $stmt->bindValue(":foto", $produto->getFoto());
+        $stmt->bindValue(":fornecedor", $produto->getFornecedor()->getId());
 
         try {
             $stmt->execute();

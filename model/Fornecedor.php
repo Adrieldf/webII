@@ -55,4 +55,29 @@ class Fornecedor
     {
         return $this->produtos;
     }
+
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    public function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+    }
+
+    public function setTelefone($telefone)
+    {
+        $this->telefone = $telefone;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function setEndereco($endereco)
+    {
+        $this->endereco = $endereco;
+    }
 }

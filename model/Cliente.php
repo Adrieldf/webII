@@ -57,4 +57,36 @@ class Cliente
     {
         return $this->pedidos;
     }
+
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    public function setTelefone($telefone)
+    {
+        $this->telefone = $telefone;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function setCartaoCredito($cartaoCredito)
+    {
+        $this->cartaoCredito = $cartaoCredito;
+    }
+
+    public function setEndereco($endereco)
+    {
+        $this->endereco = $endereco;
+    }
+
+    public function setPedidos($pedidos)
+    {
+        $this->pedidos = $pedidos;
+    }
+
+
 }

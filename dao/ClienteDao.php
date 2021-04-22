@@ -38,39 +38,81 @@ class ClienteDao extends Dao
         }
     }
 
-    public function remove($cliente)
+    public function getAll()
     {
-
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
-
-        $stmt = $this->conn->prepare($query);
-
-        //bind
-        $stmt->bindParam(':id', $cliente->getId());
-
-        //executa
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function buscaTodos()
-    {
-
         $query = "SELECT * FROM " . $this->table_name . " ORDER BY id ASC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
         $clientes = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
-            extract($row);
-            $cliente = new Cliente($id, $nome, $telefone, $email, $cartaoCredito);
+            $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
+            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco);
+
             $clientes[] = $cliente;
         }
         return $clientes;
+    }
+
+    public function getOneById($id)
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
+            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco);
+        }
+
+        return $cliente;
+    }
+
+    public function update($cliente) {
+
+        $query = "UPDATE " .
+            $this->table_name .
+            " SET 
+            nome = :nome, 
+            telefone = :telefone,
+            cartaocredito = :cartaocredito,  
+            email1 = :email, 
+            rua = :rua, 
+            numero = :numero, 
+            complemento = :complemento, 
+            bairro = :bairro, 
+            cep = :cep, 
+            cidade = :cidade, 
+            estado = :estado"  .
+            " WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // bind parameters
+        $stmt->bindValue(":id", $cliente->getId());
+        $stmt->bindValue(":nome", $cliente->getNome());
+        $stmt->bindValue(":telefone", $cliente->getTelefone());
+        $stmt->bindValue(":email", $cliente->getEmail());
+        $stmt->bindValue(":cartaocredito", $cliente->getCartaoCredito());
+        $stmt->bindValue(":rua", $cliente->getEndereco()->getRua());
+        $stmt->bindValue(":numero", $cliente->getEndereco()->getNumero());
+        $stmt->bindValue(":complemento", $cliente->getEndereco()->getComplemento());
+        $stmt->bindValue(":bairro", $cliente->getEndereco()->getBairro());
+        $stmt->bindValue(":cep", $cliente->getEndereco()->getCep());
+        $stmt->bindValue(":cidade", $cliente->getEndereco()->getCidade());
+        $stmt->bindValue(":estado", $cliente->getEndereco()->getEstado());
+
+        // execute the query
+        if($stmt->execute()){
+            return true;
+        }
+
+        return false;
     }
 }

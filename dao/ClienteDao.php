@@ -8,7 +8,10 @@ class ClienteDao extends Dao
 
     public function insert($cliente)
     {
-        $query = "INSERT INTO " . $this->table_name . " (nome, telefone, email1, cartaocredito) VALUES" . " (:nome, :telefone, :email, :cartaoCredito)";
+        $query = "INSERT INTO " .
+            $this->table_name .
+            " (nome, telefone, email1, cartaocredito, rua, numero, complemento, bairro, cep, cidade, estado) VALUES" .
+            " (:nome, :telefone, :email, :cartaoCredito, :rua, :numero, :complemento, :bairro, :cep, :cidade, :estado)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -17,6 +20,13 @@ class ClienteDao extends Dao
         $stmt->bindValue(":telefone", $cliente->getTelefone());
         $stmt->bindValue(":email", $cliente->getEmail());
         $stmt->bindValue(":cartaoCredito", $cliente->getCartaoCredito());
+        $stmt->bindValue(":rua", $cliente->getEndereco()->getRua());
+        $stmt->bindValue(":numero", $cliente->getEndereco()->getNumero());
+        $stmt->bindValue(":complemento", $cliente->getEndereco()->getComplemento());
+        $stmt->bindValue(":bairro", $cliente->getEndereco()->getBairro());
+        $stmt->bindValue(":cep", $cliente->getEndereco()->getCep());
+        $stmt->bindValue(":cidade", $cliente->getEndereco()->getCidade());
+        $stmt->bindValue(":estado", $cliente->getEndereco()->getEstado());
 
         try {
             $stmt->execute();

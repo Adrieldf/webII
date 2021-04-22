@@ -12,13 +12,15 @@ class Cliente
     private $pedidos;
 
 
-    public function __construct($id, $nome, $telefone, $email, $cartaoCredito)
+    public function __construct($id, $nome, $telefone, $email, $cartaoCredito, $endereco)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->telefone = $telefone;
         $this->email = $email;
         $this->cartaoCredito = $cartaoCredito;
+
+        $this->endereco = $endereco;
     }
 
     public function getId()
@@ -55,6 +57,4 @@ class Cliente
     {
         return $this->pedidos;
     }
-
-
 }

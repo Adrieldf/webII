@@ -11,13 +11,14 @@ class Fornecedor
     private $endereco;
     private $produtos;
 
-    public function __construct($id, $nome, $descricao, $telefone, $email)
+    public function __construct($id, $nome, $descricao, $telefone, $email, $endereco)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->descricao = $descricao;
         $this->telefone = $telefone;
         $this->email = $email;
+        $this->endereco = $endereco;
     }
 
     public function getId()

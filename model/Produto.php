@@ -56,5 +56,26 @@ class Produto
         return $this->itens;
     }
 
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    public function setDescricao($descricao)
+    {
+        $this->descricao = $descricao;
+    }
+
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+    }
+
+    public function setFornecedor($fornecedor)
+    {
+        $this->fornecedor = $fornecedor;
+    }
+
+
 
 }

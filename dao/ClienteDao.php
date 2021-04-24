@@ -20,21 +20,30 @@ class ClienteDao extends Dao
         $stmt->bindValue(":telefone", $cliente->getTelefone());
         $stmt->bindValue(":email", $cliente->getEmail());
         $stmt->bindValue(":cartaoCredito", $cliente->getCartaoCredito());
-        $stmt->bindValue(":rua", $cliente->getEndereco()->getRua());
-        $stmt->bindValue(":numero", $cliente->getEndereco()->getNumero());
-        $stmt->bindValue(":complemento", $cliente->getEndereco()->getComplemento());
-        $stmt->bindValue(":bairro", $cliente->getEndereco()->getBairro());
-        $stmt->bindValue(":cep", $cliente->getEndereco()->getCep());
-        $stmt->bindValue(":cidade", $cliente->getEndereco()->getCidade());
-        $stmt->bindValue(":estado", $cliente->getEndereco()->getEstado());
-
+        if (is_null($cliente->getEndereco())) {
+            $stmt->bindValue(":rua", "");
+            $stmt->bindValue(":numero", "");
+            $stmt->bindValue(":complemento", "");
+            $stmt->bindValue(":bairro", "");
+            $stmt->bindValue(":cep", "");
+            $stmt->bindValue(":cidade", "");
+            $stmt->bindValue(":estado", "");
+        }else{
+            $stmt->bindValue(":rua", $cliente->getEndereco()->getRua());
+            $stmt->bindValue(":numero", $cliente->getEndereco()->getNumero());
+            $stmt->bindValue(":complemento", $cliente->getEndereco()->getComplemento());
+            $stmt->bindValue(":bairro", $cliente->getEndereco()->getBairro());
+            $stmt->bindValue(":cep", $cliente->getEndereco()->getCep());
+            $stmt->bindValue(":cidade", $cliente->getEndereco()->getCidade());
+            $stmt->bindValue(":estado", $cliente->getEndereco()->getEstado());
+        }
         try {
             $stmt->execute();
             $id = $this->conn->lastInsertId();
             print_r($id);
             return $id;
-        }catch ( PDOException $Exception){
-            print_r($Exception->getMessage( ) . '' . $Exception->getCode( ));
+        } catch (PDOException $Exception) {
+            print_r($Exception->getMessage() . '' . $Exception->getCode());
         }
     }
 
@@ -46,7 +55,7 @@ class ClienteDao extends Dao
         $stmt->execute();
 
         $clientes = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
             $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
             $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco);
@@ -74,7 +83,8 @@ class ClienteDao extends Dao
         return $cliente;
     }
 
-    public function update($cliente) {
+    public function update($cliente)
+    {
 
         $query = "UPDATE " .
             $this->table_name .
@@ -109,7 +119,7 @@ class ClienteDao extends Dao
         $stmt->bindValue(":estado", $cliente->getEndereco()->getEstado());
 
         // execute the query
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
         }
 

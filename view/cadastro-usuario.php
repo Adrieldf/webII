@@ -21,7 +21,7 @@ include("navbar.php");
             <div class="card col-md-4">
                 <div class="card-body">
                     <h5 class="card-title">Seja bem-vinda(o)!</h5>
-                    <form>
+                    <form action="../controller/SignupController.php" method="get">
                         <div class="mb-3">
                             <label for="txtNomeCompleto" class="form-label">Nome completo</label>
                             <input type="text" class="form-control" name="txtNomeCompleto" aria-describedby="emailHelp">
@@ -41,10 +41,6 @@ include("navbar.php");
                         <div class="mb-3">
                             <label for="txtRepitaSenha" class="form-label">Repita a senha</label>
                             <input type="password" class="form-control" name="txtRepitaSenha">
-                        </div>
-                        <div class="mb-3">
-                            <label for="txtData" class="form-label">Data de nascimento</label>
-                            <input type="date" class="form-control" name="txtData">
                         </div>
                         <button type="submit" class="btn btn-primary">Criar conta</button>
 

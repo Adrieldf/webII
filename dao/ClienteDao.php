@@ -83,6 +83,24 @@ class ClienteDao extends Dao
         return $cliente;
     }
 
+    public function getOneByEmail($email)
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE email1 = :email";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
+            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco);
+        }
+
+        return $cliente;
+    }
+    
     public function update($cliente)
     {
 

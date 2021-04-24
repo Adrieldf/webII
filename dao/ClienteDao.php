@@ -10,8 +10,8 @@ class ClienteDao extends Dao
     {
         $query = "INSERT INTO " .
             $this->table_name .
-            " (nome, telefone, email1, cartaocredito, rua, numero, complemento, bairro, cep, cidade, estado) VALUES" .
-            " (:nome, :telefone, :email, :cartaoCredito, :rua, :numero, :complemento, :bairro, :cep, :cidade, :estado)";
+            " (nome, telefone, email1, cartaocredito, rua, numero, complemento, bairro, cep, cidade, estado, senha) VALUES" .
+            " (:nome, :telefone, :email, :cartaoCredito, :rua, :numero, :complemento, :bairro, :cep, :cidade, :estado, :senha)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -37,6 +37,8 @@ class ClienteDao extends Dao
             $stmt->bindValue(":cidade", $cliente->getEndereco()->getCidade());
             $stmt->bindValue(":estado", $cliente->getEndereco()->getEstado());
         }
+        $stmt->bindValue(":senha", $cliente->getSenha());
+        
         try {
             $stmt->execute();
             $id = $this->conn->lastInsertId();
@@ -58,7 +60,7 @@ class ClienteDao extends Dao
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
             $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
-            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco);
+            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco, $row['senha']);
 
             $clientes[] = $cliente;
         }
@@ -77,7 +79,7 @@ class ClienteDao extends Dao
 
         if ($row) {
             $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
-            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco);
+            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco, $row['senha']);
         }
 
         return $cliente;
@@ -95,12 +97,12 @@ class ClienteDao extends Dao
 
         if ($row) {
             $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
-            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco);
+            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco, $row['senha']);
         }
 
         return $cliente;
     }
-    
+
     public function update($cliente)
     {
 
@@ -117,7 +119,8 @@ class ClienteDao extends Dao
             bairro = :bairro, 
             cep = :cep, 
             cidade = :cidade, 
-            estado = :estado"  .
+            estado = :estado,
+            senha = :senha"  .
             " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
@@ -135,6 +138,7 @@ class ClienteDao extends Dao
         $stmt->bindValue(":cep", $cliente->getEndereco()->getCep());
         $stmt->bindValue(":cidade", $cliente->getEndereco()->getCidade());
         $stmt->bindValue(":estado", $cliente->getEndereco()->getEstado());
+        $stmt->bindValue(":senha", $cliente->getSenha());
 
         // execute the query
         if ($stmt->execute()) {

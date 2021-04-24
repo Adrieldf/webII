@@ -11,8 +11,9 @@ class Cliente
     private $endereco;
     private $pedidos;
 
+    private $senha;
 
-    public function __construct($id, $nome, $telefone, $email, $cartaoCredito, $endereco)
+    public function __construct($id, $nome, $telefone, $email, $cartaoCredito, $endereco, $senha)
     {
         $this->id = $id;
         $this->nome = $nome;
@@ -21,6 +22,7 @@ class Cliente
         $this->cartaoCredito = $cartaoCredito;
 
         $this->endereco = $endereco;
+        $this->senha = $senha;
     }
 
     public function getId()
@@ -88,5 +90,12 @@ class Cliente
         $this->pedidos = $pedidos;
     }
 
-
+    public function getSenha()
+    {
+        return $this->senha;
+    }
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+    }
 }

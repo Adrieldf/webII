@@ -75,6 +75,27 @@ class FornecedorDao extends Dao
         return $fornecedor;
     }
 
+    public function getOneByNome($nome)
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE nome = :nome";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":nome", $nome);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $fornecedor = new Fornecedor(NULL,NULL,NULL,NULL,NULL,NULL,);
+
+        if ($row) {
+            $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
+            $fornecedor = new Fornecedor($row['id'], $row['nome'], $row['descricao'], $row['telefone'], $row['email1'], $endereco);
+        }
+
+        return $fornecedor;
+    }
+
+
     public function update($fornecedor) {
 
         $query = "UPDATE " .

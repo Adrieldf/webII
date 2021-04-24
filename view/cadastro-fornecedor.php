@@ -32,7 +32,7 @@ include("navbar.php");
                 </div>
             </div>
             <div class="col-md-6">
-            <a class="btn btn-info cadastro-fornecedor-botao-pesquisar" href="path/to/settings" aria-label="Settings">
+                <a class="btn btn-info cadastro-fornecedor-botao-pesquisar" href="path/to/settings" aria-label="Settings">
                     <i class="fa fa-search"> Pesquisar</i>
                 </a>
             </div>
@@ -161,25 +161,61 @@ include("navbar.php");
         <form class="cadastro-fornecedor-form">
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="nome">Nome</label>
-                    <input type="text" class="form-control" id="nome">
+                    <label for="nome">Nome produto</label>
+                    <input type="text" class="form-control" id="txtNome">
                 </div>
+                <div class="form-group col-md-6">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" id="txtDescricao">
+                </div>
+            </div>
+            <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="telefone">Telefone</label>
-                    <input type="text" class="form-control" id="telefone" placeholder="(##) #####-####">
+                    <input type="text" class="form-control" id="txtTelefone" placeholder="(##) #####-####">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="email">Email</label>
+                    <input type="text" type="email" class="form-control" id="txtEmail" placeholder="exemplo@exemplo.com">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cep">CEP</label>
+                    <input type="text" type="email" class="form-control" id="txtCep" placeholder="12345-678">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                    <label for="rua">Rua</label>
+                    <input type="text" class="form-control" id="txtRua">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="numero">Número</label>
+                    <input type="text" type="email" class="form-control" id="txtNumero">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="complemento">Complemento</label>
+                    <input type="text" type="email" class="form-control" id="txtComplemento">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="descricao">Descrição</label>
-                    <input type="text" class="form-control" id="descricao">
+                    <label for="bairro">Bairro</label>
+                    <input type="text" class="form-control" id="txtBairro">
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="email">Email</label>
-                    <input type="text" type="email" class="form-control" id="email" placeholder="exemplo@exemplo.com">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" type="email" class="form-control" id="txtCidade">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="estado">Estado</label>
+                    <select id="txtEstado" class="form-control">
+                        <option selected>RS</option>
+                        <option>SC</option>
+                        <option>PR</option>
+                    </select>
                 </div>
             </div>
-            <a class="btn btn-success" href="path/to/settings" aria-label="Settings">
+            <a type="submit" class="btn btn-success" aria-label="Settings">
                 <i class="fa fa-save" aria-hidden="true"> Salvar</i>
             </a>
             <!--

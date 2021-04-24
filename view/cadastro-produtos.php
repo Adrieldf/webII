@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '\..\controller\MainController.php';
+require_once __DIR__ . '\..\controller\cadastroProdutosController.php';
 require_once("header.php");
 
 ?>
@@ -10,6 +11,9 @@ require_once("header.php");
 <?php
 include("header.php");
 include("navbar.php");
+
+$inputProduto = "Teste";
+
 ?>
 
 <body>
@@ -17,15 +21,16 @@ include("navbar.php");
         <div class="row">
             <div class="col-md-9">
                 <div class="form-row row">
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="id">ID Forn.</label>
+                            <input type="text" class="form-control" id="id-fornecedor" placeholder="">
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="fornecedor">Fornecedor</label>
-                            <select class="form-control">
-                                <option selected>Selecionar fornecedor</option>
-                                <option value="1">Fornecedor</option>
-                                <option value="2">Fornecedor2</option>
-                                <option value="3">Fornecedor3</option>
-                            </select>
+                            <input type="numero" class="form-control" id="nome-fornecedor" placeholder="">
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -34,7 +39,7 @@ include("navbar.php");
                             <input type="text" class="form-control" id="id-produto" placeholder="">
                         </div>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="nome">Nome produto</label>
                             <input type="numero" class="form-control" id="nome-produto" placeholder="">
@@ -96,37 +101,36 @@ include("navbar.php");
 
     <div class="container-fluid border">
         <form class="cadastro-fornecedor-form">
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="fornecedor">Fornecedor</label>
-                    <select class="form-control">
-                        <option value="1">Fornecedor</option>
-                        <option value="2">Fornecedor2</option>
-                        <option value="3">Fornecedor3</option>
-                    </select>
+            <form action="../controller/cadastroProdutosController.php" method="get">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="fornecedor">Fornecedor</label>
+                        <select class="form-control" name="txtFornecedor">
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="produto">Produto</label>
+                        <input type="text" class="form-control" id="txtProduto" value="<?php echo $inputProduto ?>">
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="descricao">Descrição</label>
+                        <input type="text" class="form-control" id="txtDescricao">
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="produto">Produto</label>
-                    <input type="text" class="form-control" id="produto">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="Quantidade">Quantidade</label>
+                        <input type="text" class="form-control" id="txtQuantidade">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="valor">Valor</label>
+                        <input type="text" class="form-control" id="txtValor">
+                    </div>
                 </div>
-                <div class="form-group col-md-5">
-                    <label for="descricao">Descrição</label>
-                    <input type="text" class="form-control" id="descricao">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="Quantidade">Quantidade</label>
-                    <input type="text" class="form-control" id="quantidade">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="valor">Valor</label>
-                    <input type="text" class="form-control" id="valor">
-                </div>
-            </div>
-            <a class="btn btn-success" href="path/to/settings" aria-label="Settings">
-                <i class="fa fa-save" aria-hidden="true"> Salvar</i>
-            </a>
+                <a type="submit" class="btn btn-success" aria-label="Settings">
+                    <i class="fa fa-save" aria-hidden="true"> Salvar</i>
+                </a>
+            </form>
         </form>
     </div>
 </body>

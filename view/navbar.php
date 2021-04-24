@@ -1,5 +1,8 @@
 <?php
 require_once("header.php");
+session_start();
+$nomeCliente = @$_SESSION["nome_cliente"];
+$idCliente = @$_SESSION["id_cliente"];
 ?>
 
 <header>
@@ -26,12 +29,19 @@ require_once("header.php");
         </li>
      --> 
       </ul>
-    
-      <div class="d-flex">
-        <button class="btn btn-outline-success navbar-button" onclick="window.location.href='cadastro-usuario.php';">Cadastrar-se</button>
-        &nbsp;
-        <button class="btn btn-outline-success navbar-button" onclick="window.location.href='login.php';">Login</button>
-      </div>
+      <?php if ($nomeCliente != "") : ?>
+          <div class="d-flex">
+            <button class="btn btn-outline-success navbar-button" onclick="window.location.href='cadastro-usuario.php?id=' . <?=$idCliente?>;"> <?=$nomeCliente?> </button>
+            &nbsp;
+            <button class="btn btn-outline-success navbar-button" onclick="window.location.href='../controller/LogoutController.php';">Sair</button>
+          </div>
+        <?php else : ?>
+          <div class="d-flex">
+            <button class="btn btn-outline-success navbar-button" onclick="window.location.href='cadastro-usuario.php';">Cadastrar-se</button>
+            &nbsp;
+            <button class="btn btn-outline-success navbar-button" onclick="window.location.href='login.php';">Login</button>
+          </div>
+        <?php endif; ?>
     </div>
   </div>
 </header>

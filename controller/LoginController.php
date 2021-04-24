@@ -25,7 +25,7 @@ if ($cliente) {
         $_SESSION["id_cliente"] = $cliente->getId();
         $_SESSION["nome_cliente"] = stripslashes($cliente->getNome());
         echo "<script> console.log('Login feito com sucesso! cliente: ' " .  $_SESSION['nome_cliente'] . " </script>";
-        //header("Location: ../view/perfil-usuario.php");
+        header("Location: ../view/index.php");
         exit;
     } else {
         $problemas = TRUE;

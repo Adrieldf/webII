@@ -1,6 +1,7 @@
 <?php
 
 include_once('Dao.php');
+include_once("../model/Endereco.php");
 
 class FornecedorDao extends Dao
 {
@@ -46,6 +47,7 @@ class FornecedorDao extends Dao
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
+        $endereco = new Endereco(NULL,NULL,NULL,NULL,NULL,NULL,NULL,);
         $fornecedores = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 

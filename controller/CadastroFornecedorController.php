@@ -5,18 +5,18 @@ include_once("../model/Fornecedor.php");
 include_once("../model/Endereco.php");
 include_once("../model/Produto.php");
 
-$nomeFornecedor = @$_POST["txtNome"];
-$descricao = @$_POST["txtDescricao"];
-$telefone = @$_POST["txtTelefone"];
-$email = @$_POST["txtEmail"];
+$nomeFornecedor = @$_GET["txtNome"];
+$descricao = @$_GET["txtDescricao"];
+$telefone = @$_GET["txtTelefone"];
+$email = @$_GET["txtEmail"];
 
-$cep = @$_POST["txtCep"];
-$rua = @$_POST["txtRua"];
-$numero = @$_POST["txtNumero"];
-$complemento = @$_POST["txtComplemento"];
-$bairro = @$_POST["txtBairro"];
-$cidade = @$_POST["txtCidade"];
-$estado = @$_POST["txtEstado"];
+$cep = @$$_GET["txtCep"];
+$rua = @$_GET["txtRua"];
+$numero = @$_GET["txtNumero"];
+$complemento = @$_GET["txtComplemento"];
+$bairro = @$_GET["txtBairro"];
+$cidade = @$_GET["txtCidade"];
+$estado = @$_GET["txtEstado"];
 
 $pgDaoFactory = new PgDaoFactory();
 
@@ -29,8 +29,7 @@ $pgDaoFactory = new PgDaoFactory();
 $dao = $pgDaoFactory->getFornecedorDao();
 
 $resposta = $dao->insert($fornecedor);
-echo "PASSEI AQUI";
-print_r("PASSEI AQUI");
+
 
 exit;
 

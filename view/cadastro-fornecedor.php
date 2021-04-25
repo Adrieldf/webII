@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__ . '\..\controller\MainController.php';
+include_once("../dao/PgDaoFactory.php");
+include_once("../model/Fornecedor.php");
 require_once("header.php");
 
 ?>
@@ -10,6 +12,10 @@ require_once("header.php");
 <?php
 include("header.php");
 include("navbar.php");
+
+$pgDaoFactory = new PgDaoFactory();
+$dao = $pgDaoFactory->getFornecedorDao();
+$tabela = $dao->getAll();
 ?>
 
 <body>
@@ -54,101 +60,23 @@ include("navbar.php");
                     <div class="cadastro-fornecedor-container scrollable">
                         <table class="table table-hover table-striped table-bordered table-condensed cadastro-fornecedor-tabela">
                             <tbody>
-                                <tr>
-                                    <td class="cadastro-fornecedor-tabela-col1">
-                                        <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td class="cadastro-fornecedor-tabela-col2">1</td>
-                                    <td class="cadastro-fornecedor-tabela-col3">Fruteira</td>
-                                    <td class="cadastro-fornecedor-tabela-col4">Vende frutas</td>
-                                    <td class="cadastro-fornecedor-tabela-col5">12345678</td>
-                                    <td class="cadastro-fornecedor-tabela-col6">fruteira@gmail.com</td>
-                                    <td class="cadastro-fornecedor-tabela-col7">
-                                        <div class="container">
-                                            <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="cadastro-fornecedor-tabela-col1">
-                                        <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td class="cadastro-fornecedor-tabela-col2">1</td>
-                                    <td class="cadastro-fornecedor-tabela-col3">Fruteira</td>
-                                    <td class="cadastro-fornecedor-tabela-col4">Vende frutas</td>
-                                    <td class="cadastro-fornecedor-tabela-col5">12345678</td>
-                                    <td class="cadastro-fornecedor-tabela-col6">fruteira@gmail.com</td>
-                                    <td class="cadastro-fornecedor-tabela-col7">
-                                        <div class="container">
-                                            <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="cadastro-fornecedor-tabela-col1">
-                                        <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td class="cadastro-fornecedor-tabela-col2">1</td>
-                                    <td class="cadastro-fornecedor-tabela-col3">Fruteira</td>
-                                    <td class="cadastro-fornecedor-tabela-col4">Vende frutas</td>
-                                    <td class="cadastro-fornecedor-tabela-col5">12345678</td>
-                                    <td class="cadastro-fornecedor-tabela-col6">fruteira@gmail.com</td>
-                                    <td class="cadastro-fornecedor-tabela-col7">
-                                        <div class="container">
-                                            <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="cadastro-fornecedor-tabela-col1">
-                                        <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td class="cadastro-fornecedor-tabela-col2">1</td>
-                                    <td class="cadastro-fornecedor-tabela-col3">Fruteira</td>
-                                    <td class="cadastro-fornecedor-tabela-col4">Vende frutas</td>
-                                    <td class="cadastro-fornecedor-tabela-col5">12345678</td>
-                                    <td class="cadastro-fornecedor-tabela-col6">fruteira@gmail.com</td>
-                                    <td class="cadastro-fornecedor-tabela-col7">
-                                        <div class="container">
-                                            <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="cadastro-fornecedor-tabela-col1">
-                                        <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td class="cadastro-fornecedor-tabela-col2">1</td>
-                                    <td class="cadastro-fornecedor-tabela-col3">Fruteira</td>
-                                    <td class="cadastro-fornecedor-tabela-col4">Vende frutas</td>
-                                    <td class="cadastro-fornecedor-tabela-col5">12345678</td>
-                                    <td class="cadastro-fornecedor-tabela-col6">fruteira@gmail.com</td>
-                                    <td class="cadastro-fornecedor-tabela-col7">
-                                        <div class="container">
-                                            <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php
+                                foreach ($tabela as $linha) {
+                                    echo '<tr>';
+                                    echo '<td class="cadastro-fornecedor-tabela-col1">';
+                                    echo '<a class="btn btn-default" href="path/to/settings" aria-label="Settings">';
+                                    echo '<i class="fa fa-pencil" aria-hidden="true"></i> </a> </td>';
+                                    echo '<td class="cadastro-fornecedor-tabela-col2">'. $linha->getID() .'</td>';
+                                    echo '<td class="cadastro-fornecedor-tabela-col3">'. $linha->getNome() .'</td>';
+                                    echo '<td class="cadastro-fornecedor-tabela-col4">'. $linha->getDescricao() .'</td>';
+                                    echo '<td class="cadastro-fornecedor-tabela-col5">'. $linha->getTelefone() .'</td>';
+                                    echo '<td class="cadastro-fornecedor-tabela-col6">'. $linha->getEmail() .'</td>';
+                                    echo '<td class="cadastro-fornecedor-tabela-col7">';
+                                    echo '<a class="btn btn-default" href="path/to/settings" aria-label="Settings">';
+                                    echo '<i class="fa fa-trash" aria-hidden="true"></i> </a> </td>';
+                                    echo '</tr>';
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -158,70 +86,74 @@ include("navbar.php");
     </div>
 
     <div class="container-fluid border">
-        <form class="cadastro-fornecedor-form" action="../controller/CadastroFornecedorController.php" method="POST">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="nome">Nome fornecedor</label>
-                    <input type="text" class="form-control" id="txtNome">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="descricao">Descrição</label>
-                    <input type="text" class="form-control" id="txtDescricao">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="telefone">Telefone</label>
-                    <input type="text" class="form-control" id="txtTelefone" placeholder="(##) #####-####">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="email">Email</label>
-                    <input type="text" type="email" class="form-control" id="txtEmail" placeholder="exemplo@exemplo.com">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="cep">CEP</label>
-                    <input type="text" type="email" class="form-control" id="txtCep" placeholder="#####-###">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-8">
-                    <label for="rua">Rua</label>
-                    <input type="text" class="form-control" id="txtRua">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="numero">Número</label>
-                    <input type="text" type="email" class="form-control" id="txtNumero">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="complemento">Complemento</label>
-                    <input type="text" type="email" class="form-control" id="txtComplemento">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="bairro">Bairro</label>
-                    <input type="text" class="form-control" id="txtBairro">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="cidade">Cidade</label>
-                    <input type="text" type="email" class="form-control" id="txtCidade">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="estado">Estado</label>
-                    <select id="txtEstado" class="form-control">
-                        <option selected>RS</option>
-                        <option>SC</option>
-                        <option>PR</option>
-                    </select>
-                </div>
-            </div>
-            <a type="submit" class="btn btn-success" aria-label="Settings">
-                <i class="fa fa-save" aria-hidden="true"> Salvar</i>
-            </a>
-            <!--
+        <form class="cadastro-fornecedor-form">
+            <section>
+                <form action="../controller/CadastroFornecedorController.php" method="get">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nome">Nome fornecedor</label>
+                            <input type="text" class="form-control" id="txtNome">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="descricao">Descrição</label>
+                            <input type="text" class="form-control" id="txtDescricao">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" class="form-control" id="txtTelefone" placeholder="(##) #####-####">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="email">Email</label>
+                            <input type="text" type="email" class="form-control" id="txtEmail" placeholder="exemplo@exemplo.com">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="cep">CEP</label>
+                            <input type="text" type="email" class="form-control" id="txtCep" placeholder="#####-###">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="rua">Rua</label>
+                            <input type="text" class="form-control" id="txtRua">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="numero">Número</label>
+                            <input type="text" type="email" class="form-control" id="txtNumero">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="complemento">Complemento</label>
+                            <input type="text" type="email" class="form-control" id="txtComplemento">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" class="form-control" id="txtBairro">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" type="email" class="form-control" id="txtCidade">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="estado">Estado</label>
+                            <select id="txtEstado" class="form-control">
+                                <option selected>RS</option>
+                                <option>SC</option>
+                                <option>PR</option>
+                            </select>
+                        </div>
+                    </div>
+                    <a type="submit" class="btn btn-success">
+                        <i class="fa fa-save" aria-hidden="true"> Salvar</i>
+                    </a>
+                    <!--
             <a class="btn btn-light" href="path/to/settings" aria-label="Settings">
                 <i class="fa fa-eraser"> Limpar</i>
             </a>-->
+                </form>
+            </section>
         </form>
     </div>
 </body>

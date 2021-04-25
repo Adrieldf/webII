@@ -1,7 +1,9 @@
 <?php
 
 require_once __DIR__ . '\..\controller\MainController.php';
-require_once __DIR__ . '\..\controller\cadastroProdutosController.php';
+include_once("../dao/PgDaoFactory.php");
+include_once("../model/Fornecedor.php");
+include_once("../model/Produto.php");
 require_once("header.php");
 
 ?>
@@ -12,8 +14,12 @@ require_once("header.php");
 include("header.php");
 include("navbar.php");
 
-$inputProduto = "Teste";
+$pgDaoFactory = new PgDaoFactory();
+$daoF = $pgDaoFactory->getFornecedorDao();
+$tabelaF = $daoF->getAll();
 
+$daoP = $pgDaoFactory->getProdutoDao();
+$tabelaP = $daoP->getAll();
 ?>
 
 <body>
@@ -71,26 +77,24 @@ $inputProduto = "Teste";
                     <div class="cadastro-fornecedor-container scrollable">
                         <table class="table table-hover table-striped table-bordered table-condensed cadastro-fornecedor-tabela">
                             <tbody>
-                                <tr>
-                                    <td class="cadastro-produtos-tabela-col1"><a href="#">Fornecedor</a></td>
-                                    <td class="cadastro-produtos-tabela-col2">
-                                        <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                    <td class="cadastro-produtos-tabela-col3">1</td>
-                                    <td class="cadastro-produtos-tabela-col4">Fruteira</td>
-                                    <td class="cadastro-produtos-tabela-col5">Vende frutas</td>
-                                    <td class="cadastro-produtos-tabela-col6">100</td>
-                                    <td class="cadastro-produtos-tabela-col7">20,00</td>
-                                    <td class="cadastro-produtos-tabela-col8">
-                                        <div class="container">
-                                            <a class="btn btn-default" href="path/to/settings" aria-label="Settings">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php
+                                foreach ($tabelaP as $linhaP) {
+                                    echo '<tr>';
+                                    echo '<td class="cadastro-produtos-tabela-col1"><a href="#">' . $linhaP->getFornecedor()->getNome() . '</a></td>';
+                                    echo '<td class="cadastro-produtos-tabela-col2">';
+                                    echo '<a class="btn btn-default" href="path/to/settings" aria-label="Settings">';
+                                    echo '<i class="fa fa-pencil" aria-hidden="true"></i> </a> </td>';
+                                    echo '<td class="cadastro-produtos-tabela-col3">'. $linhaP->getID() .'</td>';
+                                    echo '<td class="cadastro-produtos-tabela-col4">'. $linhaP->getNome() .'</td>';
+                                    echo '<td class="cadastro-produtos-tabela-col5">'. $linhaP->getDescricao() .'</td>';
+                                    echo '<td class="cadastro-produtos-tabela-col6"> qtd </td>';
+                                    echo '<td class="cadastro-produtos-tabela-col7"> pre </td>';
+                                    echo '<td class="cadastro-produtos-tabela-col8">';
+                                    echo '<a class="btn btn-default" href="path/to/settings" aria-label="Settings">';
+                                    echo '<i class="fa fa-trash" aria-hidden="true"></i> </a> </td>';
+                                    echo '</tr>';
+                                }
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -106,11 +110,16 @@ $inputProduto = "Teste";
                     <div class="form-group col-md-3">
                         <label for="fornecedor">Fornecedor</label>
                         <select class="form-control" name="txtFornecedor">
+                            <?php
+                            foreach ($tabelaF as $linhaF) {
+                                echo '<option>' . $linhaF->getNome() . '</option>';
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="produto">Produto</label>
-                        <input type="text" class="form-control" id="txtProduto" value="<?php echo $inputProduto ?>">
+                        <input type="text" class="form-control" id="txtProduto">
                     </div>
                     <div class="form-group col-md-5">
                         <label for="descricao">Descrição</label>

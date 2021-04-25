@@ -33,7 +33,7 @@ class FornecedorDao extends Dao
         try {
             $stmt->execute();
             $id = $this->conn->lastInsertId();
-            print_r($id);
+            //print_r($id);
             return $id;
         } catch (PDOException $Exception) {
             print_r($Exception->getMessage() . '' . $Exception->getCode());
@@ -95,6 +95,17 @@ class FornecedorDao extends Dao
         }
 
         return $fornecedor;
+    }
+
+    public function deleteById($id)
+    {
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 

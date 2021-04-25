@@ -10,13 +10,13 @@ $descricao = @$_GET["txtDescricao"];
 $telefone = @$_GET["txtTelefone"];
 $email = @$_GET["txtEmail"];
 
-$cep = @$$_GET["txtCep"];
+$cep = @$_GET["txtCep"];
 $rua = @$_GET["txtRua"];
 $numero = @$_GET["txtNumero"];
 $complemento = @$_GET["txtComplemento"];
 $bairro = @$_GET["txtBairro"];
 $cidade = @$_GET["txtCidade"];
-$estado = @$_GET["txtEstado"];
+$estado = @$_POST["txtEstado"];
 
 $pgDaoFactory = new PgDaoFactory();
 

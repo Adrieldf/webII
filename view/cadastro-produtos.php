@@ -105,7 +105,7 @@ $tabelaP = $daoP->getAll();
 
     <div class="container-fluid border">
         <form class="cadastro-fornecedor-form">
-            <form action="../controller/cadastroProdutosController.php" method="get">
+            <form action="../controller/cadastroProdutosController.php" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="fornecedor">Fornecedor</label>

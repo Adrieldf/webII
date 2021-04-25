@@ -8,7 +8,7 @@ class ProdutoDao extends Dao
 
     public function insert($produto)
     {
-        $query = "INSERT INTO " . $this->table_name . " (nome, descricao, foto, fornecedor) VALUES" . " (:nome, :descricao, :foto, :fornecedor)";
+        $query = "INSERT INTO " . $this->table_name . " (nome, descricao, foto, fornecedor, quantidade, preco) VALUES" . " (:nome, :descricao, :foto, :fornecedor, :quantidade, :preco)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -17,6 +17,8 @@ class ProdutoDao extends Dao
         $stmt->bindValue(":descricao", $produto->getDescricao());
         $stmt->bindValue(":foto", $produto->getFoto());
         $stmt->bindValue(":fornecedor", $produto->getFornecedor()->getId());
+        $stmt->bindValue(":quantidade", $produto->getEstoque()->getQuantidade());
+        $stmt->bindValue(":preco", $produto->getEstoque()->getPreco());
 
         try {
             $stmt->execute();
@@ -41,7 +43,7 @@ class ProdutoDao extends Dao
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
             $fornecedor = $fornecedorDao->getOneById($row['fornecedor']);
-            $produto = new Produto($row['id'], $row['nome'], $row['descricao'], $row['foto'], $fornecedor);
+            $produto = new Produto($row['id'], $row['nome'], $row['descricao'], $row['foto'], $fornecedor, $row['quantidade'], $row['preco']);
 
             $produtos[] = $produto;
         }
@@ -61,7 +63,7 @@ class ProdutoDao extends Dao
         if ($row) {
             $pgDaoFactory = new PgDaoFactory();
             $fornecedor = $pgDaoFactory->getFornecedorDao()->getOneById($row['fornecedor']);
-            $produto = new Produto($row['id'], $row['nome'], $row['descricao'], $row['foto'], $fornecedor);
+            $produto = new Produto($row['id'], $row['nome'], $row['descricao'], $row['foto'], $fornecedor, $row['quantidade'], $row['preco']);
         }
 
         return $produto;
@@ -75,7 +77,9 @@ class ProdutoDao extends Dao
             nome = :nome, 
             descricao = :descricao,
             foto = :foto,  
-            fornecedor = :fornecedor" .
+            fornecedor = :fornecedor,
+            quantidade = :quantidade,
+            preco = :preco".
             " WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
@@ -85,6 +89,8 @@ class ProdutoDao extends Dao
         $stmt->bindValue(":descricao", $produto->getDescricao());
         $stmt->bindValue(":foto", $produto->getFoto());
         $stmt->bindValue(":fornecedor", $produto->getFornecedor()->getId());
+        $stmt->bindValue(":quantidade", $produto->getEstoque()->getQuantidade());
+        $stmt->bindValue(":preco", $produto->getEstoque()->getPreco());
 
         // execute the query
         if($stmt->execute()){

@@ -8,17 +8,18 @@ class Produto
     private $foto;
 
     private $fornecedor;
-    private $estoques;
+    private $estoque;
 
     private $itens;
 
-    public function __construct($id, $nome, $descricao, $foto, $fornecedor)
+    public function __construct($id, $nome, $descricao, $foto, $fornecedor, $quantidade, $preco)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->descricao = $descricao;
         $this->foto = $foto;
         $this->fornecedor = $fornecedor;
+        $this->estoque = new Estoque($quantidade, $preco, $this);
     }
 
     public function getId()
@@ -46,9 +47,9 @@ class Produto
         return $this->fornecedor;
     }
 
-    public function getEstoques()
+    public function getEstoque()
     {
-        return $this->estoques;
+        return $this->estoque;
     }
 
     public function getItens()

@@ -158,10 +158,10 @@ include("navbar.php");
     </div>
 
     <div class="container-fluid border">
-        <form class="cadastro-fornecedor-form">
+        <form class="cadastro-fornecedor-form" action="../controller/CadastroFornecedorController.php" method="POST">
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="nome">Nome produto</label>
+                    <label for="nome">Nome fornecedor</label>
                     <input type="text" class="form-control" id="txtNome">
                 </div>
                 <div class="form-group col-md-6">
@@ -180,7 +180,7 @@ include("navbar.php");
                 </div>
                 <div class="form-group col-md-4">
                     <label for="cep">CEP</label>
-                    <input type="text" type="email" class="form-control" id="txtCep" placeholder="12345-678">
+                    <input type="text" type="email" class="form-control" id="txtCep" placeholder="#####-###">
                 </div>
             </div>
             <div class="form-row">

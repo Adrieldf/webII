@@ -20,44 +20,52 @@ $tabelaF = $daoF->getAll();
 
 $daoP = $pgDaoFactory->getProdutoDao();
 $tabelaP = $daoP->getAll();
+
+$idF = @$_GET["idFornecedor"];
+$nomeF = @$_GET["nomeFornecedor"];
+$idP = @$_GET["idProduto"];
+$nomeP = @$_GET["nomeProduto"];
+
 ?>
 
 <body>
     <div class="container-fluid border">
-        <div class="row">
-            <div class="col-md-9">
+        <form method="get" action="#">
+            <div class="col-md-12">
                 <div class="form-row row">
                     <div class="col-md-1">
                         <div class="form-group">
                             <label for="id">ID Forn.</label>
-                            <input type="text" class="form-control" id="id-fornecedor" placeholder="">
+                            <input type="text" class="form-control" id="idFornecedor" name="idFornecedor" value="<?=$idF?>">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="fornecedor">Fornecedor</label>
-                            <input type="numero" class="form-control" id="nome-fornecedor" placeholder="">
+                            <input type="numero" class="form-control" id="nomeFornecedor" name="nomeFornecedor" value="<?=$nomeF?>">
                         </div>
                     </div>
                     <div class="col-md-1">
                         <div class="form-group">
                             <label for="id">ID</label>
-                            <input type="text" class="form-control" id="id-produto" placeholder="">
+                            <input type="text" class="form-control" id="idProduto" name="idProduto" value="<?=$idP?>">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label for="nome">Nome produto</label>
-                            <input type="numero" class="form-control" id="nome-produto" placeholder="">
+                            <input type="numero" class="form-control" id="nomeProduto" name="nomeProduto" value="<?=$nomeP?>">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary cadastro-produto-botao-pesquisar" value="Pesquisar" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <a class="btn btn-info cadastro-produto-botao-pesquisar" href="path/to/settings" aria-label="Settings">
-                    <i class="fa fa-search"> Pesquisar</i>
-                </a>
-            </div>
+        </form>
+        <div class="row">
             <div class="container-fluid border">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-condensed">
@@ -79,19 +87,43 @@ $tabelaP = $daoP->getAll();
                             <tbody>
                                 <?php
                                 foreach ($tabelaP as $linhaP) {
+
+                                    if (!empty($_GET["idFornecedor"])) {
+                                        if ($linhaP->getFornecedor()->getID() != $_GET["idFornecedor"]) {
+                                            continue;
+                                        }
+                                    }
+                                    if (!empty($_GET["nomeFornecedor"])) {
+                                        if ($linhaP->getFornecedor()->getNome() != $_GET["nomeFornecedor"]) {
+                                            continue;
+                                        }
+                                    }
+                                    if (!empty($_GET["idProduto"])) {
+                                        if ($linhaP->getID() != $_GET["idProduto"]) {
+                                            continue;
+                                        }
+                                    }
+                                    if (!empty($_GET["nomeProduto"])) {
+                                        if ($linhaP->getNome() != $_GET["nomeProduto"]) {
+                                            continue;
+                                        }
+                                    }
+
                                     echo '<tr>';
                                     echo '<td class="cadastro-produtos-tabela-col1"><a href="#">' . $linhaP->getFornecedor()->getNome() . '</a></td>';
                                     echo '<td class="cadastro-produtos-tabela-col2">';
                                     echo '<a class="btn btn-default" href="path/to/settings" aria-label="Settings">';
                                     echo '<i class="fa fa-pencil" aria-hidden="true"></i> </a> </td>';
-                                    echo '<td class="cadastro-produtos-tabela-col3">'. $linhaP->getID() .'</td>';
-                                    echo '<td class="cadastro-produtos-tabela-col4">'. $linhaP->getNome() .'</td>';
-                                    echo '<td class="cadastro-produtos-tabela-col5">'. $linhaP->getDescricao() .'</td>';
-                                    echo '<td class="cadastro-produtos-tabela-col6"> qtd </td>';
-                                    echo '<td class="cadastro-produtos-tabela-col7"> pre </td>';
+                                    echo '<td class="cadastro-produtos-tabela-col3">' . $linhaP->getID() . '</td>';
+                                    echo '<td class="cadastro-produtos-tabela-col4">' . $linhaP->getNome() . '</td>';
+                                    echo '<td class="cadastro-produtos-tabela-col5">' . $linhaP->getDescricao() . '</td>';
+                                    echo '<td class="cadastro-produtos-tabela-col6">' . $linhaP->getEstoque()->getQuantidade() . '</td>';
+                                    echo '<td class="cadastro-produtos-tabela-col7">' . $linhaP->getEstoque()->getPreco() . '</td>';
+                                    echo '<form method="post" action="../controller/EliminarProdutoController.php">';
                                     echo '<td class="cadastro-produtos-tabela-col8">';
-                                    echo '<a class="btn btn-default" href="path/to/settings" aria-label="Settings">';
-                                    echo '<i class="fa fa-trash" aria-hidden="true"></i> </a> </td>';
+                                    echo '<input type="submit" name="clicked[' . $linhaP->getID() . ']" value="Eliminar"/>';
+                                    echo '</td>';
+                                    echo '</form>';
                                     echo '</tr>';
                                 }
                                 ?>
@@ -104,42 +136,38 @@ $tabelaP = $daoP->getAll();
     </div>
 
     <div class="container-fluid border">
-        <form class="cadastro-fornecedor-form">
-            <form action="../controller/cadastroProdutosController.php" method="post">
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="fornecedor">Fornecedor</label>
-                        <select class="form-control" name="txtFornecedor">
-                            <?php
-                            foreach ($tabelaF as $linhaF) {
-                                echo '<option>' . $linhaF->getNome() . '</option>';
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="produto">Produto</label>
-                        <input type="text" class="form-control" id="txtProduto">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="descricao">Descrição</label>
-                        <input type="text" class="form-control" id="txtDescricao">
-                    </div>
+        <form class="cadastro-fornecedor-form" action="../controller/CadastroProdutosController.php" method="POST">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="fornecedor">Fornecedor</label>
+                    <select class="form-control" name="txtFornecedor">
+                        <?php
+                        foreach ($tabelaF as $linhaF) {
+                            echo '<option>' . $linhaF->getNome() . '</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="Quantidade">Quantidade</label>
-                        <input type="text" class="form-control" id="txtQuantidade">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="valor">Valor</label>
-                        <input type="text" class="form-control" id="txtValor">
-                    </div>
+                <div class="form-group col-md-4">
+                    <label for="produto">Produto</label>
+                    <input type="text" class="form-control" id="txtProduto" name="txtProduto">
                 </div>
-                <a type="submit" class="btn btn-success" aria-label="Settings">
-                    <i class="fa fa-save" aria-hidden="true"> Salvar</i>
-                </a>
-            </form>
+                <div class="form-group col-md-5">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" id="txtDescricao" name="txtDescricao">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="Quantidade">Quantidade</label>
+                    <input type="text" class="form-control" id="txtQuantidade" name="txtQuantidade">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="valor">Valor</label>
+                    <input type="text" class="form-control" id="txtValor" name="txtValor">
+                </div>
+            </div>
+            <input type="submit" class="btn btn-success" value="Salvar" />
         </form>
     </div>
 </body>

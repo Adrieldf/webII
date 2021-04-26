@@ -1,5 +1,7 @@
 <?php
 
+include_once("../model/Estoque.php");
+
 class Produto
 {
     private $id;

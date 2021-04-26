@@ -17,8 +17,22 @@ $pgDaoFactory = new PgDaoFactory();
 $dao = $pgDaoFactory->getFornecedorDao();
 $tabela = $dao->getAll();
 
+$id = @$_GET["Id"];
+$fornecedor = @$_GET["Fornecedor"];
+
 $teste = function ($tabela) {
     foreach ($tabela as $linha) {
+        if ( !empty($_GET["Id"])){
+            if($linha->getID()!=$_GET["Id"]){
+                continue;
+            }
+        }
+        if ( !empty($_GET["Fornecedor"])){
+            if($linha->getNome()!=$_GET["Fornecedor"]){
+                continue;
+            }
+        }
+
         echo '<tr>';
         echo '<td class="cadastro-fornecedor-tabela-col1">';
         echo '<a class="btn btn-default" href="path/to/settings" aria-label="Settings">';
@@ -30,38 +44,40 @@ $teste = function ($tabela) {
         echo '<td class="cadastro-fornecedor-tabela-col6">' . $linha->getEmail() . '</td>';
         echo '<form method="post" action="../controller/EliminarFornecedorController.php">';
         echo '<td class="cadastro-fornecedor-tabela-col7">';
-        echo '<input type="submit" name="clicked[' . $linha->getID() . ']" value="Eliminar"';
+        echo '<input type="submit" name="clicked[' . $linha->getID() . ']" value="Eliminar"/>';
         echo '</td>';
         echo '</form>';
         echo '</tr>';
     }
-};
+}; //cadastro-fornecedor-botao-pesquisar
 ?>
 
 <body>
     <div class="container-fluid border">
-        <div class="row">
-            <div class="col-md-6">
+        <form method="get" action="#">
+            <div class="col-md-12">
                 <div class="form-row row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="endereco">ID</label>
-                            <input type="text" class="form-control" id="id-fornecedor" placeholder="">
+                            <input type="text" class="form-control" id="Id" name="Id" value="<?=$id?>">
                         </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-5">
                         <div class="form-group">
                             <label for="numero">Nome</label>
-                            <input type="numero" class="form-control" id="nome-fornecedor" placeholder="">
+                            <input type="numero" class="form-control" id="Fornecedor" name="Fornecedor" value="<?=$fornecedor?>">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary cadastro-fornecedor-botao-pesquisar" value="Pesquisar" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <a class="btn btn-info cadastro-fornecedor-botao-pesquisar" href="path/to/settings" aria-label="Settings">
-                    <i class="fa fa-search"> Pesquisar</i>
-                </a>
-            </div>
+        </form>
+        <div class="row">
             <div class="container-fluid border">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-condensed" id="tableF">
@@ -91,7 +107,7 @@ $teste = function ($tabela) {
         </div>
     </div>
     <div class="container-fluid border">
-        <form class="cadastro-fornecedor-form" method="get" action="../controller/CadastroFornecedorController.php">
+        <form class="cadastro-fornecedor-form" method="POST" action="../controller/CadastroFornecedorController.php">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="nome">Nome fornecedor</label>
@@ -140,7 +156,7 @@ $teste = function ($tabela) {
                     <input type="text" type="email" class="form-control" id="txtCidade" name="txtCidade">
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="estado" >Estado</label>
+                    <label for="estado">Estado</label>
                     <select id="txtEstado" name="txtEstado" class="form-control">
                         <option selected>RS</option>
                         <option>SC</option>

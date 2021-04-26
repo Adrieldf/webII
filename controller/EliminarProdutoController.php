@@ -6,11 +6,11 @@
 
     $pgDaoFactory = new PgDaoFactory();
 
-    $dao = $pgDaoFactory->getFornecedorDao();
+    $dao = $pgDaoFactory->getProdutoDao();
 
     $dao->deleteById($id);
 
-    header("Location: ../view/cadastro-fornecedor.php");
+    header("Location: ../view/cadastro-produtos.php");
 
     exit;
 ?>

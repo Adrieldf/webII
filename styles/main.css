@@ -40,7 +40,8 @@
 }
 
 .cadastro-fornecedor-botao-pesquisar{
-  margin-top: 5%;
+  margin-top: 10%;
+  margin-bottom: 1%;
 }
 
 .cadastro-fornecedor-tabela{
@@ -120,5 +121,6 @@
 }
 
 .cadastro-produto-botao-pesquisar{
-  margin-top: 10%;
+  margin-top: 15%;
+  margin-bottom: 1%;
 }

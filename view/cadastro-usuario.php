@@ -31,10 +31,6 @@ include("navbar.php");
                             <input type="email" class="form-control" name="txtEmail" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
-                            <label for="txtCpf" class="form-label">CPF</label>
-                            <input type="text" class="form-control" name="txtCpf" placeholder="Ex: 123.456.789-12">
-                        </div>
-                        <div class="mb-3">
                             <label for="txtSenha" class="form-label">Senha</label>
                             <input type="password" class="form-control" name="txtSenha">
                         </div>

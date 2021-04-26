@@ -14,12 +14,15 @@ include("navbar.php");
 
 <body>
 
-    <div>
-        <h1> index </h1>
-
-    </div>
+<div class="container container-md">
+    <button class="btn btn-primary col-md-12" style="margin-top: 10px" onclick="window.location.href='cadastro-fornecedor.php';">
+        Manutenção de Fornecedores
+    </button>
+    <button class="btn btn-primary col-md-12" style="margin-top: 10px" onclick="window.location.href='cadastro-produtos.php';">
+        Manutenção de Produtos
+    </button>
+</div>
 
 
 </body>
-
 </html>

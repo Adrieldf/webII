@@ -13,7 +13,7 @@ $repeatPassword = @$_GET["txtRepitaSenha"];
 
 
 
-//$endereco = new Endereco("rua", "10", "comple", "bairro", "12345-678", "cidade", "estado");
+$endereco = new Endereco("rua", "10", "comple", "bairro", "12345-678", "cidade", "estado");
 
 $cliente = new Cliente(null, $nomeCompleto, null, $email, null, null, $senha);
 

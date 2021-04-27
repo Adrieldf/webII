@@ -31,7 +31,7 @@ $idCliente = @$_SESSION["id_cliente"];
       </ul>
       <?php if ($nomeCliente != "") : ?>
           <div class="d-flex">
-            <button class="btn btn-outline-success navbar-button" onclick="window.location.href='editar-usuario.php'"> <?=$nomeCliente?> </button>
+            <button class="btn btn-outline-success navbar-button" onclick="window.location.href='editar-usuario.php?id=<?=$idCliente?>';"> <?=$nomeCliente?> </button>
             &nbsp;
             <button class="btn btn-outline-success navbar-button" onclick="window.location.href='../controller/LogoutController.php';">Sair</button>
           </div>

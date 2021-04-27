@@ -64,6 +64,11 @@ class Produto
         $this->nome = $nome;
     }
 
+    public function setEstoque($estoque)
+    {
+        $this->estoque = $estoque;
+    }
+
     public function setDescricao($descricao)
     {
         $this->descricao = $descricao;

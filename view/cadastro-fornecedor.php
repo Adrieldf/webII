@@ -3,6 +3,7 @@
 require_once __DIR__ . '\..\controller\MainController.php';
 include_once("../dao/PgDaoFactory.php");
 include_once("../model/Fornecedor.php");
+include_once("../model/Endereco.php");
 require_once("header.php");
 
 ?>
@@ -22,21 +23,26 @@ $fornecedor = @$_GET["Fornecedor"];
 
 $teste = function ($tabela) {
     foreach ($tabela as $linha) {
-        if ( !empty($_GET["Id"])){
-            if($linha->getID()!=$_GET["Id"]){
+        if (!empty($_GET["Id"])) {
+            if ($linha->getID() != $_GET["Id"]) {
                 continue;
             }
         }
-        if ( !empty($_GET["Fornecedor"])){
-            if($linha->getNome()!=$_GET["Fornecedor"]){
+        if (!empty($_GET["Fornecedor"])) {
+            if ($linha->getNome() != $_GET["Fornecedor"]) {
                 continue;
             }
         }
 
         echo '<tr>';
         echo '<td class="cadastro-fornecedor-tabela-col1">';
-        echo '<a class="btn btn-default" href="path/to/settings" aria-label="Settings">';
-        echo '<i class="fa fa-pencil" aria-hidden="true"></i> </a> </td>';
+        echo '<input type="submit" onclick="botaoEditar(
+            \'' . $linha->getNome() . '\',\'' . $linha->getDescricao() . '\',\'' . $linha->getTelefone()
+            . '\',\'' . $linha->getEmail() . '\',\'' . $linha->getEndereco()->getCep() . '\',\'' . $linha->getEndereco()->getRua()
+            . '\',\'' . $linha->getEndereco()->getNumero() . '\',\'' . $linha->getEndereco()->getComplemento()
+            . '\',\'' . $linha->getEndereco()->getBairro() . '\',\'' . $linha->getEndereco()->getCidade() . '\',\'' . $linha->getEndereco()->getEstado()
+            . '\' '. ','.$linha->getID().' )" name="edit[' . $linha->getID() . ']" value="Editar"/>';
+        echo '</td>';
         echo '<td class="cadastro-fornecedor-tabela-col2">' . $linha->getID() . '</td>';
         echo '<td class="cadastro-fornecedor-tabela-col3">' . $linha->getNome() . '</td>';
         echo '<td class="cadastro-fornecedor-tabela-col4">' . $linha->getDescricao() . '</td>';
@@ -60,13 +66,13 @@ $teste = function ($tabela) {
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="endereco">ID</label>
-                            <input type="text" class="form-control" id="Id" name="Id" value="<?=$id?>">
+                            <input type="text" class="form-control" id="Id" name="Id" value="<?= $id ?>">
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="numero">Nome</label>
-                            <input type="numero" class="form-control" id="Fornecedor" name="Fornecedor" value="<?=$fornecedor?>">
+                            <input type="numero" class="form-control" id="Fornecedor" name="Fornecedor" value="<?= $fornecedor ?>">
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -94,7 +100,7 @@ $teste = function ($tabela) {
                         </thead>
                     </table>
                     <div class="cadastro-fornecedor-container scrollable">
-                        <table class="table table-hover table-striped table-bordered table-condensed cadastro-fornecedor-tabela">
+                        <table id="tableF" class="table table-hover table-striped table-bordered table-condensed cadastro-fornecedor-tabela">
                             <tbody>
                                 <?php
                                 echo $teste($tabela);
@@ -106,7 +112,7 @@ $teste = function ($tabela) {
             </div>
         </div>
     </div>
-    <div class="container-fluid border">
+    <div class="container-fluid border" id="insert">
         <form class="cadastro-fornecedor-form" method="POST" action="../controller/CadastroFornecedorController.php">
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -164,33 +170,131 @@ $teste = function ($tabela) {
                     </select>
                 </div>
             </div>
-            <input type="submit" class="btn btn-success" value="Salvar" />
-            <!--
-                    <a type="submit" class="btn btn-success">
-                        <i class="fa fa-save" aria-hidden="true"> Salvar</i>
-                    </a>-->
-            <!--
-            <a class="btn btn-light" href="path/to/settings" aria-label="Settings">
-                <i class="fa fa-eraser"> Limpar</i>
-            </a>-->
+            <div class="form-row">
+                <input type="submit" class="btn btn-success" value="Salvar" />
+            </div>
+        </form>
+    </div>
+    <div class="container-fluid border" id="update" style="display:none">
+        <form class="cadastro-fornecedor-form" method="POST" action="../controller/AtualizaFornecedorController.php">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="nome">Nome fornecedor</label>
+                    <input type="text" class="form-control" id="txtNomeUpdate" name="txtNomeUpdate">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" id="txtDescricaoUpdate" name="txtDescricaoUpdate">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" class="form-control" id="txtTelefoneUpdate" name="txtTelefoneUpdate" placeholder="(##) #####-####">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="email">Email</label>
+                    <input type="text" type="email" class="form-control" id="txtEmailUpdate" name="txtEmailUpdate" placeholder="exemplo@exemplo.com">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cep">CEP</label>
+                    <input type="text" type="email" class="form-control" id="txtCepUpdate" name="txtCepUpdate" placeholder="#####-###">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-8">
+                    <label for="rua">Rua</label>
+                    <input type="text" class="form-control" id="txtRuaUpdate" name="txtRuaUpdate">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="numero">Número</label>
+                    <input type="text" type="email" class="form-control" id="txtNumeroUpdate" name="txtNumeroUpdate">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="complemento">Complemento</label>
+                    <input type="text" type="email" class="form-control" id="txtComplementoUpdate" name="txtComplementoUpdate">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="bairro">Bairro</label>
+                    <input type="text" class="form-control" id="txtBairroUpdate" name="txtBairroUpdate">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" type="email" class="form-control" id="txtCidadeUpdate" name="txtCidadeUpdate">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="estado">Estado</label>
+                    <select id="txtEstadoUpdate" name="txtEstadoUpdate" class="form-control">
+                        <option selected>RS</option>
+                        <option>SC</option>
+                        <option>PR</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group col-md-1">
+                    <input type="submit" class="btn btn-success" value="Salvar" />
+                </div>
+                <div class="form-group col-md-1">
+                    <input type="button" class="btn btn-danger" value="Cancelar" onclick="escodeBotaoCancelar()" />
+                </div>
+                <div class="form-group col-md-4">
+                <label for="idEdit">ID selecionado: </label>
+                <input type="text" class="form-control" id="txtIdEdit" name="txtIdEdit" readonly></div>
+            </div>
         </form>
     </div>
 
     <script type="text/javascript">
-        function EliminaFornecedor(btnClick) {
-            var table = document.getElementById('tableF');
+        function botaoEditar(nome, desc, tel, email, cep, rua, n, comp, bairro, cidade, est, id) {
+            var x = document.getElementById("update");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                // x.style.display = "none";
+            }
+            var x = document.getElementById("insert");
+            if (x.style.display === "none") {
+                //x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+            document.getElementById('txtNomeUpdate').value = nome;
+            document.getElementById('txtDescricaoUpdate').value = desc;
+            document.getElementById('txtTelefoneUpdate').value = tel;
+            document.getElementById('txtEmailUpdate').value = email;
+            document.getElementById('txtCepUpdate').value = cep;
+            document.getElementById('txtRuaUpdate').value = rua;
+            document.getElementById('txtNumeroUpdate').value = n;
+            document.getElementById('txtComplementoUpdate').value = comp;
+            document.getElementById('txtBairroUpdate').value = bairro;
+            document.getElementById('txtCidadeUpdate').value = cidade;
+            document.getElementById('txtEstadoUpdate').value = est;
+            document.getElementById('txtIdEdit').value = id;
 
-            //alert(btnClick);
+
+        }
+
+        function escodeBotaoCancelar() {
+            var x = document.getElementById("update");
+            if (x.style.display === "none") {
+                //x.style.display = "block";
+            } else {
+                 x.style.display = "none";
+            }
+            var x = document.getElementById("insert");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+               // x.style.display = "none";
+            }
+
+
         }
     </script>
 
-    <script type="text/javascript">
-        function SalvarFornecedor(btnClick) {
-            var table = document.getElementById('tableF');
-
-            //alert(btnClick);
-        }
-    </script>
 
 </body>
 

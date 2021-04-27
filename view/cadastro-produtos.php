@@ -36,25 +36,25 @@ $nomeP = @$_GET["nomeProduto"];
                     <div class="col-md-1">
                         <div class="form-group">
                             <label for="id">ID Forn.</label>
-                            <input type="text" class="form-control" id="idFornecedor" name="idFornecedor" value="<?=$idF?>">
+                            <input type="text" class="form-control" id="idFornecedor" name="idFornecedor" value="<?= $idF ?>">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="fornecedor">Fornecedor</label>
-                            <input type="numero" class="form-control" id="nomeFornecedor" name="nomeFornecedor" value="<?=$nomeF?>">
+                            <input type="numero" class="form-control" id="nomeFornecedor" name="nomeFornecedor" value="<?= $nomeF ?>">
                         </div>
                     </div>
                     <div class="col-md-1">
                         <div class="form-group">
                             <label for="id">ID</label>
-                            <input type="text" class="form-control" id="idProduto" name="idProduto" value="<?=$idP?>">
+                            <input type="text" class="form-control" id="idProduto" name="idProduto" value="<?= $idP ?>">
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="nome">Nome produto</label>
-                            <input type="numero" class="form-control" id="nomeProduto" name="nomeProduto" value="<?=$nomeP?>">
+                            <input type="numero" class="form-control" id="nomeProduto" name="nomeProduto" value="<?= $nomeP ?>">
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -110,10 +110,12 @@ $nomeP = @$_GET["nomeProduto"];
                                     }
 
                                     echo '<tr>';
-                                    echo '<td class="cadastro-produtos-tabela-col1"><a href="#">' . $linhaP->getFornecedor()->getNome() . '</a></td>';
+                                    echo '<td class="cadastro-produtos-tabela-col1">' . $linhaP->getFornecedor()->getNome() . '</td>';
                                     echo '<td class="cadastro-produtos-tabela-col2">';
-                                    echo '<a class="btn btn-default" href="path/to/settings" aria-label="Settings">';
-                                    echo '<i class="fa fa-pencil" aria-hidden="true"></i> </a> </td>';
+                                    echo '<input type="submit" onclick="botaoEditar(
+                                    \'' . $linhaP->getFornecedor()->getNome() . '\',\'' . $linhaP->getNome() . '\',\'' . $linhaP->getDescricao()
+                                    . '\',\'' . $linhaP->getEstoque()->getQuantidade() . '\',\'' . $linhaP->getEstoque()->getPreco() . '\''. ','.$linhaP->getID().')" name="edit" value="Editar"/>';
+                                    echo '</td>';
                                     echo '<td class="cadastro-produtos-tabela-col3">' . $linhaP->getID() . '</td>';
                                     echo '<td class="cadastro-produtos-tabela-col4">' . $linhaP->getNome() . '</td>';
                                     echo '<td class="cadastro-produtos-tabela-col5">' . $linhaP->getDescricao() . '</td>';
@@ -135,12 +137,12 @@ $nomeP = @$_GET["nomeProduto"];
         </div>
     </div>
 
-    <div class="container-fluid border">
+    <div class="container-fluid border" id="insert">
         <form class="cadastro-fornecedor-form" action="../controller/CadastroProdutosController.php" method="POST">
             <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="fornecedor">Fornecedor</label>
-                    <select class="form-control" name="txtFornecedor">
+                    <select class="form-control" name="txtFornecedor" id="txtFornecedor">
                         <?php
                         foreach ($tabelaF as $linhaF) {
                             echo '<option>' . $linhaF->getNome() . '</option>';
@@ -170,6 +172,97 @@ $nomeP = @$_GET["nomeProduto"];
             <input type="submit" class="btn btn-success" value="Salvar" />
         </form>
     </div>
+
+    <div class="container-fluid border" id="update" style="display:none">
+        <form class="cadastro-fornecedor-form" action="../controller/AtualizaProdutosController.php" method="POST">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="fornecedor">Fornecedor</label>
+                    <select class="form-control" name="txtFornecedorUpdate" id="txtFornecedorUpdate">
+                        <?php
+                        foreach ($tabelaF as $linhaF) {
+                            echo '<option>' . $linhaF->getNome() . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="produto">Produto</label>
+                    <input type="text" class="form-control" id="txtProdutoUpdate" name="txtProdutoUpdate">
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" id="txtDescricaoUpdate" name="txtDescricaoUpdate">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="Quantidade">Quantidade</label>
+                    <input type="text" class="form-control" id="txtQuantidadeUpdate" name="txtQuantidadeUpdate">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="valor">Valor</label>
+                    <input type="text" class="form-control" id="txtValorUpdate" name="txtValorUpdate">
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group col-md-1">
+                    <input type="submit" class="btn btn-success" value="Salvar" />
+                </div>
+                <div class="form-group col-md-1">
+                    <input type="button" class="btn btn-danger" value="Cancelar" onclick="escodeBotaoCancelar()" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="idEdit">ID selecionado: </label>
+                    <input type="text" class="form-control" id="txtIdEdit" name="txtIdEdit" readonly>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        function botaoEditar(nomeF, nomeP, desc, qtd, preco, id) {
+            var x = document.getElementById("update");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                // x.style.display = "none";
+            }
+            var x = document.getElementById("insert");
+            if (x.style.display === "none") {
+                //x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+            document.getElementById('txtFornecedorUpdate').value = nomeF;
+            document.getElementById('txtProdutoUpdate').value = nomeP;
+            document.getElementById('txtQuantidadeUpdate').value = qtd;
+            document.getElementById('txtDescricaoUpdate').value = desc;
+            document.getElementById('txtValorUpdate').value = preco;
+            document.getElementById('txtIdEdit').value = id;
+
+
+        }
+
+        function escodeBotaoCancelar() {
+            var x = document.getElementById("update");
+            if (x.style.display === "none") {
+                //x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+            var x = document.getElementById("insert");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                // x.style.display = "none";
+            }
+
+
+        }
+    </script>
+
+
 </body>
 
 </html>

@@ -16,8 +16,7 @@ $pgDaoFactory = new PgDaoFactory();
 $dao = $pgDaoFactory->getFornecedorDao();
 
 $fornecedorCompleto = $dao->getOneByNome($fornecedor);
-echo $quantidade;
-echo $valor;
+
 $produto = new Produto(NULL, $produto,$descricao,NULL,$fornecedorCompleto->getId(),$quantidade,$valor);
 
 $produtoDao = $pgDaoFactory->getProdutoDao();

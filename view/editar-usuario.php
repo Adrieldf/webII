@@ -142,12 +142,8 @@ if (!is_null($idCliente)) {
             <input type="submit" class="btn btn-success" value="Salvar" />
         </form>
     </div>
-    <script>
-        $(document).ready(function() {
-            $('#txtCep').mask('00000-000');
-            $('#txtTelefone').mask('(00) 00000-0000');
-        });
-    </script>
+  
+    <script type="text/javascript" src="../scripts/UsuarioScripts.js"></script>
 
 </body>
 

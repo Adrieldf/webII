@@ -80,11 +80,16 @@
 }
 
 .cadastro-fornecedor-container{
-  max-height: 250px;
+  max-height: 200px;
   width: 100%;
   margin: 0; 
   overflow-y: 
   auto;
+}
+
+.consulta-pedidos-pesquisar{
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .cadastro-fornecedor-form{
@@ -123,4 +128,33 @@
 .cadastro-produto-botao-pesquisar{
   margin-top: 15%;
   margin-bottom: 1%;
+}
+
+.botao-pesquisar{
+  margin-top: 16%;
+  margin-left: 1%;
+}
+
+.consulta-pedido-tabela-col1{
+  width: 13%;
+}
+
+.consulta-pedido-tabela-col2{
+  width: 20%;
+}
+
+.consulta-pedido-tabela-col3{
+  width: 15%;
+}
+
+.consulta-pedido-tabela-col4{
+  width: 17%;
+}
+
+.consulta-pedido-tabela-col5{
+  width: 15%;
+}
+
+.consulta-pedido-tabela-col6{
+  width: 20%;
 }

@@ -29,4 +29,9 @@ class ItemPedido
         return $this->produto;
     }
 
+    public function getDadosParaJSON() {
+        $data = ['quantidade' => $this->quantidade, 'preco' => $this->preco,'produto' => $this->produto];
+        return $data;
+    }
+
 }

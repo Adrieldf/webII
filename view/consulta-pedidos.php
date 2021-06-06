@@ -19,7 +19,7 @@ $daoF = $pgDaoFactory->getPedidoDao();
 $pedidos = $daoF->getAll();
 
 $dao2 = $pgDaoFactory->getItensPedidoDao();
-$itens = $dao2->getItensPedido(3);
+$itens = $dao2->getAll();;
 
 ?>
 
@@ -98,11 +98,11 @@ $itens = $dao2->getItensPedido(3);
                 <div class="container-fluid border ">
                     <?php
                     echo "<div id='div_item'></div>";
-                    foreach ($itens as $linha) {
+                    /*foreach ($itens as $linha) {
                         echo '<tr class="clickable-row">';
                         echo '<td class="consulta-pedido-tabela-col1">TESTE</td>';
                         echo '</tr>';
-                    }
+                    }*/
                     ?>
                 </div>
             </div>

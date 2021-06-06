@@ -6,8 +6,6 @@ $nr_pedido = @$_POST['nr_pedido'];
 
 $pgDaoFactory = new PgDaoFactory();
 
-$itemDao = $pgDaoFactory->getItensPedidoDao();
+$dao = $pgDaoFactory->getItensPedidoDao();
 
-echo $dao = $itemDao->getItensPedidoJSON($nr_pedido);
-
-?>
+echo $dao->getItensPedidoJSON($nr_pedido);

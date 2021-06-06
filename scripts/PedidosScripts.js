@@ -24,29 +24,34 @@ function buscaItens(nr_pedido) {
             success: function (msg) {
                 var mydata = eval(msg);
                 var quantos = Object.keys(mydata).length;
-                $("#div_item").html("<h1>Itens</h1>");
+                $("#div_item").html("<div class='form-group row'><label for='pedido' class='col-sm-3 col-form-label'>Pedido selecionado: </label><div class='col-sm-2'><input type='text' class='form-control' id='txtIdEdit' name='txtIdEdit' value='"+nr_pedido+"' readonly></div></div>");
                 if (quantos > 0) {
                     var table = $.makeTableItens(mydata);
                     $("#div_item").append(table);
                 }
+            },
+            error: function(jqXhr, textStatus, errorMessage){
+                alert(errorMessage);
             }
         });
 }
 
-$.makeTableAlunos = function (mydata) {
+$.makeTableItens = function (mydata) {
     var table = $('<table class="table table-striped table-advance table-hover">');
     var tblHeader = "<tbody><tr>";
-    tblHeader += "<th>Id</th>";
-    tblHeader += "<th>Nome</th>";
-    tblHeader += "<th>Ações</th></tr>";
+    tblHeader += "<th class='consulta-pedido-item-col1'>Imagem</th>";
+    tblHeader += "<th class='consulta-pedido-item-col2'>Descrição</th>";
+    tblHeader += "<th class='consulta-pedido-item-col3'>Quantidade</th>";
+    tblHeader += "<th class='consulta-pedido-item-col4'>Valor unitário</th>";
+    tblHeader += "<th class='consulta-pedido-item-col5'>Valor total</th></tr>";
     $(tblHeader).appendTo(table);
     $.each(mydata, function (index, value) {
         var TableRow = "<tr>";
-        var idAluno = "-1";
+        var id = "-1";
         $.each(value, function (key, val) {
             TableRow += "<td>" + val + "</td>";
             if(key=="id") {
-                idAluno = val;
+                id = val;
             }
         });
 

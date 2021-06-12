@@ -24,4 +24,28 @@ class PedidoDao extends Dao
         return $pedidos;
     }
 
+    public function updateCabecalho($id, $dataPedido, $dataEntrega, $situacao) {
+        $query = "UPDATE " .
+        $this->table_name .
+        " SET 
+        datapedido = :datapedido, 
+        dataentrega = :dataentrega,
+        situacao = :situacao".
+        " WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindValue(":id", $id);
+        $stmt->bindValue(":datapedido", $dataPedido);
+        $stmt->bindValue(":dataentrega", $dataEntrega);
+        $stmt->bindValue(":situacao", $situacao);
+
+        // execute the query
+        if($stmt->execute()){
+            return true;
+        }
+
+        return false;
+    }
+
 }

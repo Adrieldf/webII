@@ -10,9 +10,9 @@ class ItensPedidoDao extends Dao
     public function getItensPedido($id_pedido)
     {
         $query = "SELECT * FROM " . $this->table_name . "WHERE id_pedido = :id_pedido";
-
+        //$query = "SELECT * FROM " . $this->table_name . " ORDER BY id_produto ASC";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(":id_pedido", $id_pedido);
+        $stmt->bindParam(":id_pedido", $id_pedido);
         $stmt->execute();
 
         $itens = [];
@@ -48,12 +48,10 @@ class ItensPedidoDao extends Dao
 
     public function getAll()
     {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id ASC";
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id_produto ASC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-
-       
 
         $itens = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){

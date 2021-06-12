@@ -6,10 +6,18 @@ jQuery(document).ready(function ($) {
 
 function preparaEventos($) {
     $(".clickable-row").click(function () {
+        
         $(this).addClass('active').siblings().removeClass('active');
-        nr_pedido = jQuery(this).find("td:eq(0)").text();
+        nr_pedido   = jQuery(this).find("td:eq(0)").text();
+        cliente     = jQuery(this).find("td:eq(1)").text();
+        dataPedido  = jQuery(this).find("td:eq(2)").text();
+        dataEntrega = jQuery(this).find("td:eq(3)").text();
+        valor       = jQuery(this).find("td:eq(4)").text();
+        situacao    = jQuery(this).find("td:eq(5)").text();
         buscaItens(nr_pedido);
+        botaoEditar(nr_pedido,cliente,valor,dataPedido, dataEntrega, situacao);
     });
+    
 }
 
 function buscaItens(nr_pedido) {
@@ -60,3 +68,21 @@ $.makeTableItens = function (mydata) {
     });
     return ($(table));
 };
+
+function botaoEditar(pedido,cliente,valor,dataPedido, dataEntrega, situacao){
+    var x = document.getElementById("update");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    }
+    var x = document.getElementById("div_item");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    }
+
+    document.getElementById('pedido').value = pedido;
+    document.getElementById('cliente').value = cliente;
+    document.getElementById('valor').value = valor;
+    document.getElementById('dataPedido').value = dataPedido;
+    document.getElementById('dataEntrega').value = dataEntrega;
+    document.getElementById('situacao').value = situacao;
+}

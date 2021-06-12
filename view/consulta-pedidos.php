@@ -19,7 +19,7 @@ $daoF = $pgDaoFactory->getPedidoDao();
 $pedidos = $daoF->getAll();
 
 $dao2 = $pgDaoFactory->getItensPedidoDao();
-$itens = $dao2->getAll();;
+$itens = $dao2->getItensPedido(4);
 
 ?>
 
@@ -61,7 +61,7 @@ $itens = $dao2->getAll();;
                                     <th class="consulta-pedido-tabela-col2">Cliente</th>
                                     <th class="consulta-pedido-tabela-col3">Data pedido</th>
                                     <th class="consulta-pedido-tabela-col4">Data entrega</th>
-                                    <th class="consulta-pedido-tabela-col5">Valor total</th>
+                                    <th class="consulta-pedido-tabela-col5">Valor</th>
                                     <th class="consulta-pedido-tabela-col6">Situacao</th>
                                 </tr>
                             </thead>
@@ -71,6 +71,7 @@ $itens = $dao2->getAll();;
                                 <tbody>
                                     <?php
                                     foreach ($pedidos as $linha) {
+
                                         echo '<tr class="clickable-row">';
                                         echo '<td class="consulta-pedido-tabela-col1">' . $linha->getNumero() . '</td>';
                                         echo '<td class="consulta-pedido-tabela-col2">' . "Nome" . '</td>';
@@ -80,7 +81,6 @@ $itens = $dao2->getAll();;
                                         echo '<td class="consulta-pedido-tabela-col6">' . $linha->getSituacao() . '</td>';
                                         echo '</tr>';
                                     }
-
                                     ?>
                                 </tbody>
                             </table>
@@ -96,6 +96,47 @@ $itens = $dao2->getAll();;
             </div>
             <div class="col-md-8">
                 <div class="container-fluid border ">
+                    <div id="update" style="display:none">
+                        <form class="cadastro-fornecedor-form" action="../controller/AtualizaPedidosController.php" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="pedido">Nº pedido</label>
+                                    <input type="text" class="form-control" id="pedido" name="pedido" readonly>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="cliente">Cliente</label>
+                                    <input type="text" class="form-control" id="cliente" name="cliente" readonly>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="valor">Valor</label>
+                                    <input type="text" class="form-control" id="valor" name="valor" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="dataPedido">Data pedido</label>
+                                    <input type="date" class="form-control" id="dataPedido" name="dataPedido">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="dataEntrega">Data entregra</label>
+                                    <input type="date" class="form-control" id="dataEntrega" name="dataEntrega">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="situacao">Situação</label>
+                                    <select class="custom-select mr-sm-2" name="situacao" id="situacao">
+                                        <option value="NOVO">NOVO</option>
+                                        <option value="CANCELADO">CANCELADO</option>
+                                        <option value="ENTREGUE">ENTREGUE</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-inline consulta-pedido-editar">
+                                <div class="form-group col-md-2">
+                                    <input type="submit" class="btn btn-success" value="Salvar" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <?php
                     echo "<div id='div_item'></div>";
                     /*foreach ($itens as $linha) {

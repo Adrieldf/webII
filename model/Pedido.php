@@ -1,11 +1,14 @@
 <?php
 
+include_once("../model/Cliente.php");
+
 class Pedido
 {
     private $numero;
     private $dataPedido;
     private $dataEntrega;
     private $situacao;
+    private $cliente;
 
     public function __construct($numero, $dataPedido, $dataEntrega, $situacao)
     {
@@ -13,6 +16,12 @@ class Pedido
         $this->dataPedido = $dataPedido;
         $this->dataEntrega = $dataEntrega;
         $this->situacao = $situacao;
+        $this->cliente = new Cliente(NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+    }
+
+    public function getCliente()
+    {
+        return $this->cliente;
     }
 
     public function getNumero()

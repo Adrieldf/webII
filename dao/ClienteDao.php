@@ -67,6 +67,53 @@ class ClienteDao extends Dao
         return $clientes;
     }
 
+    public function getAllWithPagination($limit, $offset)
+    {
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id ASC LIMIT :l OFFSET :o";
+
+        $stmt = $this->conn->prepare($query);
+
+        //bind
+        $stmt->bindValue(":l", $limit);
+        $stmt->bindValue(":o", $offset);
+
+        $stmt->execute();
+
+        $clientes = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+            $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
+            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco, $row['senha']);
+
+            $clientes[] = $cliente;
+        }
+        return $clientes;
+    }
+
+    public function getAllByNomeContainingWithPagination($nome, $limit, $offset)
+    {
+        $nomeContido = "%".$nome."%";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE nome LIKE :nomeContido ORDER BY id ASC LIMIT :l OFFSET :o";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindValue(":nomeContido", $nomeContido);
+        $stmt->bindValue(":l", $limit);
+        $stmt->bindValue(":o", $offset);
+
+        $stmt->execute();
+
+        $clientes = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+            $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
+            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco, $row['senha']);
+
+            $clientes[] = $cliente;
+        }
+        return $clientes;
+    }
+
     public function getOneById($id)
     {
         $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id";

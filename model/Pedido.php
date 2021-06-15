@@ -9,14 +9,16 @@ class Pedido
     private $dataEntrega;
     private $situacao;
     private $cliente;
+    private $itens;//array
 
-    public function __construct($numero, $dataPedido, $dataEntrega, $situacao)
+    public function __construct($numero, $dataPedido, $dataEntrega, $situacao, $cliente, $itens)
     {
         $this->numero = $numero;
         $this->dataPedido = $dataPedido;
         $this->dataEntrega = $dataEntrega;
         $this->situacao = $situacao;
-        $this->cliente = new Cliente(NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+        $this->cliente = $cliente;
+        $this->itens = $itens;
     }
 
     public function getCliente()
@@ -44,4 +46,8 @@ class Pedido
         return $this->situacao;
     }
 
+    public function getItens()
+    {
+        return $this->itens;
+    }
 }

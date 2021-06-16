@@ -56,5 +56,16 @@ class Endereco
         return $this->estado;
     }
 
-
+    public function toJSON()
+    {
+        return [
+            'rua' => $this->rua,
+            'numero' => $this->numero,
+            'complemento' => $this->complemento,
+            'cep' => $this->cep,
+            'bairro' => $this->bairro,
+            'cidade' => $this->cidade,
+            'estado' => $this->estado
+        ];
+    }
 }

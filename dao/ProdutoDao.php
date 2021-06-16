@@ -100,7 +100,7 @@ class ProdutoDao extends Dao
         $stmt->bindValue(":nome", $produto->getNome());
         $stmt->bindValue(":descricao", $produto->getDescricao());
         $stmt->bindValue(":foto", $produto->getFoto());
-        $stmt->bindValue(":fornecedor", $produto->getFornecedor()->getId());
+        $stmt->bindValue(":fornecedor", $produto->getFornecedor());
         $stmt->bindValue(":quantidade", $produto->getEstoque()->getQuantidade());
         $stmt->bindValue(":preco", $produto->getEstoque()->getPreco());
 

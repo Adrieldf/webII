@@ -19,7 +19,7 @@ class Estoque
         return $this->quantidade;
     }
 
-    public function setQuantidade($quantidade): void
+    public function setQuantidade($quantidade)
     {
         $this->quantidade = $quantidade;
     }
@@ -29,7 +29,7 @@ class Estoque
         return $this->preco;
     }
 
-    public function setPreco($preco): void
+    public function setPreco($preco)
     {
         $this->preco = $preco;
     }
@@ -39,11 +39,15 @@ class Estoque
         return $this->produto;
     }
 
-    public function setProduto($produto): void
+    public function setProduto($produto)
     {
         $this->produto = $produto;
     }
 
-
-
+    public function toJSON(){
+        return [
+            'quantidade' => $this->quantidade,
+            'preco' => $this->preco
+        ];
+    }
 }

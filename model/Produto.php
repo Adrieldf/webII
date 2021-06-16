@@ -84,6 +84,16 @@ class Produto
         $this->fornecedor = $fornecedor;
     }
 
+    public function toJSON()
+    {
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'descricao' => $this->descricao,
+            'fornecedor' => $this->fornecedor->toJSON(),
+            'estoque' => $this->estoque->toJSON()
+        ];
+    }
 
 
 }

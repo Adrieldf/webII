@@ -80,4 +80,15 @@ class Fornecedor
     {
         $this->endereco = $endereco;
     }
+
+    public function toJSON(){
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'descricao' => $this->descricao,
+            'telefone' => $this->telefone,
+            'email' => $this->email,
+            'endereco' => $this->endereco->toJSON()
+        ];
+    }
 }

@@ -13,7 +13,7 @@ $fornecedorDao = $factory->getFornecedorDao();
 switch ($metodo) {
     case 'GET':
         if (!empty($_GET["id"])) {
-            getOne($produtoDao);
+            getOne($produtoDao, intval($_GET["id"]));
         } else {
             getAll($produtoDao);
         }
@@ -23,16 +23,15 @@ switch ($metodo) {
         break;
     case 'PUT':
         if (!empty($_GET["id"])) {
-            update($produtoDao);
+            update($produtoDao, intval($_GET["id"]));
         } else {
             http_response_code(404);
         }
         break;
 }
 
-function getOne($produtoDao)
+function getOne($produtoDao, $id)
 {
-    $id = intval($_GET["id"]);
     $produto = $produtoDao->getOneById($id);
     if ($produto != null) {
         $json = stripslashes(json_encode($produto->toJSON(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
@@ -59,13 +58,14 @@ function create($produtoDao)
 {
     $map = json_decode(file_get_contents('php://input'), true);
     $produto = new Produto(null, $map["nome"], $map["descricao"], null, $map["fornecedor"], 0, $map["preco"]);
-    $produtoDao->insert($produto);
+    $id = $produtoDao->insert($produto);
+
+    getOne($produtoDao, $id);
     http_response_code(201);
 }
 
-function update($produtoDao)
+function update($produtoDao, $id)
 {
-    $id = intval($_GET["id"]);
     $produto = $produtoDao->getOneById($id);
     if ($produto != null) {
         $map = json_decode(file_get_contents('php://input'), true);
@@ -76,6 +76,7 @@ function update($produtoDao)
 
         $produtoDao->update($produto);
 
+        getOne($produtoDao, $id);
         http_response_code(200);
     } else {
         http_response_code(404);

@@ -42,7 +42,6 @@ class ClienteDao extends Dao
         try {
             $stmt->execute();
             $id = $this->conn->lastInsertId();
-            print_r($id);
             return $id;
         } catch (PDOException $Exception) {
             print_r($Exception->getMessage() . '' . $Exception->getCode());

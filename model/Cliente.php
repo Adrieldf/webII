@@ -98,4 +98,14 @@ class Cliente
     {
         $this->senha = $senha;
     }
+
+    public function toJSON(){
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'telefone' => $this->telefone,
+            'email' => $this->email,
+            'endereco' => $this->endereco->toJSON(),
+        ];
+    }
 }

@@ -4,6 +4,7 @@ require_once __DIR__ . '\..\controller\MainController.php';
 include_once("../dao/PgDaoFactory.php");
 include_once("../model/Fornecedor.php");
 include_once("../model/Endereco.php");
+include_once("../model/Produto.php");
 require_once("header.php");
 
 ?>
@@ -71,7 +72,6 @@ $itens = $dao2->getItensPedido(4);
                                 <tbody>
                                     <?php
                                     foreach ($pedidos as $linha) {
-
                                         echo '<tr class="clickable-row">';
                                         echo '<td class="consulta-pedido-tabela-col1">' . $linha->getNumero() . '</td>';
                                         echo '<td class="consulta-pedido-tabela-col2">' . "Nome" . '</td>';
@@ -139,11 +139,11 @@ $itens = $dao2->getItensPedido(4);
                     </div>
                     <?php
                     echo "<div id='div_item'></div>";
-                    /*foreach ($itens as $linha) {
+                    foreach ($itens as $linha) {
                         echo '<tr class="clickable-row">';
                         echo '<td class="consulta-pedido-tabela-col1">TESTE</td>';
                         echo '</tr>';
-                    }*/
+                    }
                     ?>
                 </div>
             </div>

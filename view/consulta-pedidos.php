@@ -72,9 +72,8 @@ $pedidos = $daoF->getAll();
 
                                         $valor = 0;
                                         foreach($linha->getItens() as $linha2){
-                                            $valor = $valor + $linha2->getPreco();
+                                            $valor = $valor + ( $linha2->getPreco() * $linha2->getQuantidade() );
                                         }
-
                                         echo '<tr class="clickable-row">';
                                         echo '<td class="consulta-pedido-tabela-col1">' . $linha->getNumero() . '</td>';
                                         echo '<td class="consulta-pedido-tabela-col2">' . $linha->getCliente()->getNome() . '</td>';

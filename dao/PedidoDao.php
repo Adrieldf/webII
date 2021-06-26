@@ -18,15 +18,12 @@ class PedidoDao extends Dao
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
 
-        $pgDaoFactory = new PgDaoFactory();
-        $clienteDao = $pgDaoFactory->getClienteDao();
-
         $pedidos = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-            $cliente = $clienteDao->getOneById($row['id_cliente']);
+            $cliente = $this->getOneClienteById($row['id_cliente']);
             $itens = $this->getItemByPedidoId($row['numerop']);
-            $pedido = new Pedido($row['numerop'], $row['datapedido'], $row['dataentrega'], $row['situacao'], $cliente, $itens);
+            $pedido = new Pedido($row['numerop'], $row['datapedido'], $row['dataentrega'], $row['situacao'],$cliente,$itens);
 
             $pedidos[] = $pedido;
         }
@@ -42,21 +39,71 @@ class PedidoDao extends Dao
 
         $stmt->execute();
 
-        $pgDaoFactory = new PgDaoFactory();
-        $produtoDao = $pgDaoFactory->getProdutoDao();
-        $clienteDao = $pgDaoFactory->getClienteDao();
-
         $itens = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-            $produto = $produtoDao->getOneById($row['produto_id']);
-            //$cliente = $clienteDao->getOneById($row['cliente_id']);
-            $item = new ItemPedido($row['pedido_numero'],$row['quantidade'], $row['preco'], 3, $produto);
+            $produto = $this->getOneProdutoById($row['produto_id']);
+            $item = new ItemPedido($row['pedido_numero'],$row['quantidade'], $row['preco'], $produto);
 
             $itens[] = $item;
         }
         return $itens;
-}
+    }
+
+    public function getOneProdutoById($id)
+    {
+        $query = "SELECT * FROM w2produto WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $pgDaoFactory = new PgDaoFactory();
+            $fornecedor = $this->getOneFornecedorById($row['fornecedor']);
+            $produto = new Produto($row['id'], $row['nome'], $row['descricao'], $row['foto'], $fornecedor, $row['quantidade'], $row['preco']);
+        }
+
+        return $produto;
+    }
+
+    public function getOneFornecedorById($id)
+    {
+        $query = "SELECT * FROM w2fornecedor WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
+            $fornecedor = new Fornecedor($row['id'], $row['nome'], $row['descricao'], $row['telefone'], $row['email1'], $endereco);
+        }
+
+        return $fornecedor;
+    }
+
+    public function getOneClienteById($id)
+    {
+        $query = "SELECT * FROM w2cliente WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
+            $cliente = new Cliente($row['id'], $row['nome'], $row['telefone'], $row['email1'], $row['cartaocredito'], $endereco, $row['senha']);
+        }
+
+        return $cliente;
+    }
 
     public function updateCabecalho($id, $dataPedido, $dataEntrega, $situacao)
     {

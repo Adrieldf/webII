@@ -5,18 +5,13 @@ class ItemPedido
     private $pedido;
     private $quantidade;
     private $preco;
-    private $cliente;
     private $produto;
 
-    public function __construct($pedido, $quantidade, $preco, $cliente, $produto)
+    public function __construct($pedido, $quantidade, $preco, $produto)
     {
         $this->quantidade = $quantidade;
         $this->preco = $preco;
         $this->produto = $produto;
-    }
-
-    public function getCliente(){
-        return $this->cliente;
     }
 
     public function getPedido(){
@@ -39,7 +34,14 @@ class ItemPedido
     }
 
     public function getDadosParaJSON() {
-        $data = ['quantidade' => $this->quantidade, 'preco' => $this->preco,'produto' => $this->produto];
+
+        //$data = ['quantidade' => $this->quantidade, 'preco' => $this->preco,'produto' => $this->preco];
+         $data = 
+            ['imagem' => "imagem",
+            'descricao' => $this->getProduto()->getDescricao(),
+            'quantidade' => $this->quantidade, 
+            'preco' => $this->preco,
+            'valorTotal' => $this->preco * $this->quantidade];
         return $data;
     }
 

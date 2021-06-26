@@ -26,35 +26,37 @@ class PedidoDao extends Dao
 
             $cliente = $clienteDao->getOneById($row['id_cliente']);
             $itens = $this->getItemByPedidoId($row['numerop']);
-            $pedido = new Pedido($row['id'], $row['datapedido'], $row['dataentrega'], $row['situacao'], $cliente, $itens);
+            $pedido = new Pedido($row['numerop'], $row['datapedido'], $row['dataentrega'], $row['situacao'], $cliente, $itens);
 
             $pedidos[] = $pedido;
         }
         return $pedidos;
     }
 
-//    private function getItemByPedidoId($pedidoId){
-//        $query = "SELECT * FROM w2itenspedido WHERE id_pedido = :id_pedido";
-//
-//        $stmt = $this->conn->prepare($query);
-//
-//        $stmt->bindValue(":id_pedido", $pedidoId);
-//
-//        $stmt->execute();
-//
-//        $pgDaoFactory = new PgDaoFactory();
-//        $produtoDao = $pgDaoFactory->getProdutoDao();
-//
-//        $itens = [];
-//        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-//
-//            $produto = $produtoDao->getOneById($row['id_produto']);
-//            $item = new ItemPedido($row['quantidade'], $row['preco'], $produto);
-//
-//            $itens[] = $item;
-//        }
-//        return $itens;
-//}
+    private function getItemByPedidoId($pedidoId){
+        $query = "SELECT * FROM w2itenspedido WHERE pedido_numero = :id_pedido";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindValue(":id_pedido", $pedidoId);
+
+        $stmt->execute();
+
+        $pgDaoFactory = new PgDaoFactory();
+        $produtoDao = $pgDaoFactory->getProdutoDao();
+        $clienteDao = $pgDaoFactory->getClienteDao();
+
+        $itens = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+            $produto = $produtoDao->getOneById($row['produto_id']);
+            //$cliente = $clienteDao->getOneById($row['cliente_id']);
+            $item = new ItemPedido($row['pedido_numero'],$row['quantidade'], $row['preco'], 3, $produto);
+
+            $itens[] = $item;
+        }
+        return $itens;
+}
 
     public function updateCabecalho($id, $dataPedido, $dataEntrega, $situacao)
     {

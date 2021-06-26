@@ -19,9 +19,6 @@ $pgDaoFactory = new PgDaoFactory();
 $daoF = $pgDaoFactory->getPedidoDao();
 $pedidos = $daoF->getAll();
 
-$dao2 = $pgDaoFactory->getItensPedidoDao();
-$itens = $dao2->getItensPedido(4);
-
 ?>
 
 <body>
@@ -72,12 +69,18 @@ $itens = $dao2->getItensPedido(4);
                                 <tbody>
                                     <?php
                                     foreach ($pedidos as $linha) {
+
+                                        $valor = 0;
+                                        foreach($linha->getItens() as $linha2){
+                                            $valor = $valor + $linha2->getPreco();
+                                        }
+
                                         echo '<tr class="clickable-row">';
                                         echo '<td class="consulta-pedido-tabela-col1">' . $linha->getNumero() . '</td>';
-                                        echo '<td class="consulta-pedido-tabela-col2">' . "Nome" . '</td>';
+                                        echo '<td class="consulta-pedido-tabela-col2">' . $linha->getCliente()->getNome() . '</td>';
                                         echo '<td class="consulta-pedido-tabela-col3">' . $linha->getDataPedido() . '</td>';
                                         echo '<td class="consulta-pedido-tabela-col4">' . $linha->getDataEntrega() . '</td>';
-                                        echo '<td class="consulta-pedido-tabela-col5">' . "Total" . '</td>';
+                                        echo '<td class="consulta-pedido-tabela-col5">' . $valor . '</td>';
                                         echo '<td class="consulta-pedido-tabela-col6">' . $linha->getSituacao() . '</td>';
                                         echo '</tr>';
                                     }
@@ -139,11 +142,6 @@ $itens = $dao2->getItensPedido(4);
                     </div>
                     <?php
                     echo "<div id='div_item'></div>";
-                    foreach ($itens as $linha) {
-                        echo '<tr class="clickable-row">';
-                        echo '<td class="consulta-pedido-tabela-col1">TESTE</td>';
-                        echo '</tr>';
-                    }
                     ?>
                 </div>
             </div>

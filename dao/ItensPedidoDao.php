@@ -9,23 +9,29 @@ class ItensPedidoDao extends Dao
 
     public function getItensPedido($id_pedido)
     {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE pedodo_numero = :id_pedido";
-        //$query = "SELECT * FROM " . $this->table_name . " ORDER BY id_produto ASC";
+        $pgDaoFactory = new PgDaoFactory();
+        //$produtos = $pgDaoFactory->getProdutoDao()->getAll();
+
+        $query = "SELECT * FROM " . $this->table_name . " WHERE pedido_numero = :id_pedido";
         $stmt = $this->conn->prepare($query);
         $stmt->bindValue(":id_pedido", $id_pedido);
 
         $stmt->execute();
 
         $itens = [];
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            
+            /*unset($produto);
+            foreach($produtos as $linha){
+                if($row['produto_id']== $linha->getId()){
+                    $produto = $linha;
+                    break;
+                }
+            }
+            $item = new ItemPedido($id_pedido,$row['quantidade'], $row['preco'], 3);
 
-            $pgDaoFactory = new PgDaoFactory();
-
-            $produto = $pgDaoFactory->getProdutoDao()->getOneById($row['id_produto']);
-
-            $item = new ItemPedido($row['quantidade'], $row['preco'], $produto);
-
-            $itens[] = $item;
+            $itens[] = $item;*/
         }
         
         return $itens;
@@ -42,21 +48,21 @@ class ItensPedidoDao extends Dao
 
     public function getAll()
     {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id_produto ASC";
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY produto_id ASC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-
+        
         $itens = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        /*while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             
             $pgDaoFactory = new PgDaoFactory();
-            $produto = $pgDaoFactory->getProdutoDao()->getOneById($row['id_produto']);
+            $produto = $pgDaoFactory->getProdutoDao()->getOneById($row['produto_id']);
 
-            $item = new ItemPedido($row['quantidade'],$row['preco'],$produto);
+            $item = new ItemPedido($row['pedido_numero'],$row['quantidade'],$row['preco'],$produto);
 
             $itens[] = $item;
-        }
+        }*/
         return $itens;
     }
 

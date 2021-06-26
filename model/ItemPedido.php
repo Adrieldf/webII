@@ -2,16 +2,25 @@
 
 class ItemPedido
 {
+    private $pedido;
     private $quantidade;
     private $preco;
-
+    private $cliente;
     private $produto;
 
-    public function __construct($quantidade, $preco, $produto)
+    public function __construct($pedido, $quantidade, $preco, $cliente, $produto)
     {
         $this->quantidade = $quantidade;
         $this->preco = $preco;
         $this->produto = $produto;
+    }
+
+    public function getCliente(){
+        return $this->cliente;
+    }
+
+    public function getPedido(){
+        return $this->pedido;
     }
 
     public function getQuantidade()

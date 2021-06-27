@@ -37,7 +37,7 @@ class ItemPedido
 
         //$data = ['quantidade' => $this->quantidade, 'preco' => $this->preco,'produto' => $this->preco];
          $data = 
-            ['imagem' => "imagem",
+            ['imagem' =>  $this->getProduto()->getFoto(),//'<img src="'. $this->getProduto()->getFoto() . '"</img>',
             'descricao' => $this->getProduto()->getDescricao(),
             'quantidade' => $this->quantidade, 
             'preco' => $this->preco,

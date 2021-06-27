@@ -50,4 +50,19 @@ class Pedido
     {
         return $this->itens;
     }
+    public function getDadosParaJSON() {
+
+        $valor = 0;
+        foreach ($this->getItens() as $linha2) {
+            $valor = $valor + ($linha2->getPreco() * $linha2->getQuantidade());
+        }
+         $data = 
+            ['pedido'   => $this->getNumero(),
+             'cliente'  => $this->getCliente()->getNome(),
+             'dataP'    => $this->getDataPedido(),
+             'dataE'    => $this->getDataEntrega(),
+             'valor'    => $valor,
+             'situacao' => $this->getSituacao()];
+        return $data;
+    }
 }

@@ -19,7 +19,7 @@ class Produto
         $this->id = $id;
         $this->nome = $nome;
         $this->descricao = $descricao;
-        $this->foto = $foto;
+        $this->foto = $foto ?? "";
         $this->fornecedor = $fornecedor;
         $this->estoque = new Estoque($quantidade, $preco, $this);
     }
@@ -41,7 +41,7 @@ class Produto
 
     public function getFoto()
     {
-        return $this->foto;
+       return $this->foto ?? null;
     }
 
     public function getFornecedor()

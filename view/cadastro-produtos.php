@@ -113,8 +113,8 @@ $nomeP = @$_GET["nomeProduto"];
                                     echo '<td class="cadastro-produtos-tabela-col1">' . $linhaP->getFornecedor()->getNome() . '</td>';
                                     echo '<td class="cadastro-produtos-tabela-col2">';
                                     echo '<input type="submit" onclick="botaoEditar(
-                                    \'' . $linhaP->getFornecedor()->getNome() . '\',\'' . $linhaP->getNome() . '\',\'' . $linhaP->getDescricao()
-                                    . '\',\'' . $linhaP->getEstoque()->getQuantidade() . '\',\'' . $linhaP->getEstoque()->getPreco() . '\''. ','.$linhaP->getID().')" name="edit" value="Editar"/>';
+                                    \'' . $linhaP->getFornecedor()->getNome() . '\',\'' . $linhaP->getNome() . '\',\'' . $linhaP->getDescricao() . '\',\'' . $linhaP->getFoto()
+                                        . '\',\'' . $linhaP->getEstoque()->getQuantidade() . '\',\'' . $linhaP->getEstoque()->getPreco() . '\'' . ',' . $linhaP->getID() . ')" name="edit" value="Editar"/>';
                                     echo '</td>';
                                     echo '<td class="cadastro-produtos-tabela-col3">' . $linhaP->getID() . '</td>';
                                     echo '<td class="cadastro-produtos-tabela-col4">' . $linhaP->getNome() . '</td>';
@@ -203,6 +203,13 @@ $nomeP = @$_GET["nomeProduto"];
                 <div class="form-group col-md-4">
                     <label for="valor">Valor</label>
                     <input type="text" class="form-control" id="txtValorUpdate" name="txtValorUpdate">
+                </div>
+                <div class="form-group col-md-4">
+                    <img class="produto-imagem" id="foto-produto">
+                    <a id="btnEditarImagem" class="btn btn-primary icon-button edit-imagem-produto" title="Editar imagem do produto">
+                        <i class="far fa-edit"></i>
+                    </a>
+                    <input type="file" id="uploadImagem" name="uploadImagem" style="display: none;" multiple/>
                 </div>
             </div>
             <div class="form-inline">

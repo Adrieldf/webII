@@ -23,14 +23,15 @@ class PedidoDao extends Dao
 
             $cliente = $this->getOneClienteById($row['id_cliente']);
             $itens = $this->getItemByPedidoId($row['numerop']);
-            $pedido = new Pedido($row['numerop'], $row['datapedido'], $row['dataentrega'], $row['situacao'],$cliente,$itens);
+            $pedido = new Pedido($row['numerop'], $row['datapedido'], $row['dataentrega'], $row['situacao'], $cliente, $itens);
 
             $pedidos[] = $pedido;
         }
         return $pedidos;
     }
 
-    private function getItemByPedidoId($pedidoId){
+    private function getItemByPedidoId($pedidoId)
+    {
         $query = "SELECT * FROM w2itenspedido WHERE pedido_numero = :id_pedido";
 
         $stmt = $this->conn->prepare($query);
@@ -43,7 +44,7 @@ class PedidoDao extends Dao
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
             $produto = $this->getOneProdutoById($row['produto_id']);
-            $item = new ItemPedido($row['pedido_numero'],$row['quantidade'], $row['preco'], $produto);
+            $item = new ItemPedido($row['pedido_numero'], $row['quantidade'], $row['preco'], $produto);
 
             $itens[] = $item;
         }
@@ -130,82 +131,93 @@ class PedidoDao extends Dao
         return false;
     }
 
-//    public function insert($pedido)
-//    {
-//        $query = "INSERT INTO " .
-//            $this->table_name .
-//            " (datapedido, dataentrega, situacao, id_cliente) VALUES" .
-//            " (:datapedido, :dataentrega, :situacao, :id_cliente)";
-//
-//        $stmt = $this->conn->prepare($query);
-//
-//        //bind
-//        $stmt->bindValue(":datapedido", $pedido->getDataPedido());
-//        $stmt->bindValue(":dataentrega", $pedido->getDataEntrega());
-//        $stmt->bindValue(":situacao", $pedido->getSituacao());
-//        $stmt->bindValue(":id_cliente", $pedido->getCliente()->getId());
-//
-//        $stmt->execute();
-//        $id = $this->conn->lastInsertId();
-//
-//        foreach ($pedido->getItens as $item) {
-//            $this->insertItem($item, $id);
-//        }
-//    }
+    //    public function insert($pedido)
+    //    {
+    //        $query = "INSERT INTO " .
+    //            $this->table_name .
+    //            " (datapedido, dataentrega, situacao, id_cliente) VALUES" .
+    //            " (:datapedido, :dataentrega, :situacao, :id_cliente)";
+    //
+    //        $stmt = $this->conn->prepare($query);
+    //
+    //        //bind
+    //        $stmt->bindValue(":datapedido", $pedido->getDataPedido());
+    //        $stmt->bindValue(":dataentrega", $pedido->getDataEntrega());
+    //        $stmt->bindValue(":situacao", $pedido->getSituacao());
+    //        $stmt->bindValue(":id_cliente", $pedido->getCliente()->getId());
+    //
+    //        $stmt->execute();
+    //        $id = $this->conn->lastInsertId();
+    //
+    //        foreach ($pedido->getItens as $item) {
+    //            $this->insertItem($item, $id);
+    //        }
+    //    }
 
-//    private function insertItem($item, $idPedido)
-//    {
-//
-//        $query = "INSERT INTO w2itenspedido " .
-//            " (id_pedido, id_produto, quantidade, preco) VALUES" .
-//            " (:id_pedido, :id_produto, :quantidade, :preco)";
-//
-//        $stmt = $this->conn->prepare($query);
-//
-//        //bind
-//        $stmt->bindValue(":id_pedido", $idPedido);
-//        $stmt->bindValue(":id_produto", $item->getProduto()->getId());
-//        $stmt->bindValue(":quantidade", $item->getQuantidade());
-//        $stmt->bindValue(":preco", $item->getPreco());
-//
-//        $stmt->execute();
-//    }
+    //    private function insertItem($item, $idPedido)
+    //    {
+    //
+    //        $query = "INSERT INTO w2itenspedido " .
+    //            " (id_pedido, id_produto, quantidade, preco) VALUES" .
+    //            " (:id_pedido, :id_produto, :quantidade, :preco)";
+    //
+    //        $stmt = $this->conn->prepare($query);
+    //
+    //        //bind
+    //        $stmt->bindValue(":id_pedido", $idPedido);
+    //        $stmt->bindValue(":id_produto", $item->getProduto()->getId());
+    //        $stmt->bindValue(":quantidade", $item->getQuantidade());
+    //        $stmt->bindValue(":preco", $item->getPreco());
+    //
+    //        $stmt->execute();
+    //    }
 
-//    public function getAllWithPagination($limit, $offset)
-//    {
-//        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id ASC LIMIT :l OFFSET :o";
-//
-//        $stmt = $this->conn->prepare($query);
-//
-//        //bind
-//        $stmt->bindValue(":l", $limit);
-//        $stmt->bindValue(":o", $offset);
-//
-//        $stmt->execute();
-//
-//        $pgDaoFactory = new PgDaoFactory();
-//        $clienteDao = $pgDaoFactory->getClienteDao();
-//
-//        $pedidos = [];
-//        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-//
-//            $cliente = $clienteDao->getOneById($row['id_cliente']);
-//            $pedido = new Pedido($row['id'],$row['datapedido'],$row['dataentrega'],$row['situacao'], $cliente);
-//
-//            $pedidos[] = $pedido;
-//        }
-//        return $pedidos;
-//    }
+        public function getAllWithPagination($limit, $offset)
+        {
+            $query = "SELECT * FROM " . $this->table_name . " ORDER BY numerop ASC LIMIT :l OFFSET :o";
+    
+            $stmt = $this->conn->prepare($query);
+    
+            //bind
+            $stmt->bindValue(":l", $limit);
+            $stmt->bindValue(":o", $offset);
+    
+            $stmt->execute();
+    
+            $pedidos = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+    
+                $cliente = $this->getOneClienteById($row['id_cliente']);
+                $itens = $this->getItemByPedidoId($row['numerop']);
+                $pedido = new Pedido($row['numerop'], $row['datapedido'], $row['dataentrega'], $row['situacao'], $cliente, $itens);
+
+                $pedidos[] = $pedido;
+            }
+            return $pedidos;
+        }
+
+    public function getPedidoJSON($pagina)
+    {   
+        $tamanhoPagina = 5;
+        $limite = $tamanhoPagina;
+        $tamanho = ($tamanhoPagina*$pagina)-$tamanhoPagina; 
+        $pedidos = $this->getAllWithPagination($limite, $tamanho);
+        $pedidosJSON = array();
+        foreach ($pedidos as $pedido) {
+            $pedidosJSON[] = $pedido->getDadosParaJSON();
+        }
+        return stripslashes(json_encode($pedidosJSON, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
 
     public function getAllByClienteNomeContainingWithPagination($nome, $limit, $offset)
     {
         $nomeContido = "%" . $nome . "%";
         $query =
-            "SELECT * FROM w2pedido, w2cliente".
-            " WHERE w2pedido.id_cliente = w2cliente.id".
-            " and w2cliente.nome".
-            " LIKE :nomeContido".
-            " ORDER BY w2pedido.numerop ASC".
+            "SELECT * FROM w2pedido, w2cliente" .
+            " WHERE w2pedido.id_cliente = w2cliente.id" .
+            " and w2cliente.nome" .
+            " LIKE :nomeContido" .
+            " ORDER BY w2pedido.numerop ASC" .
             " LIMIT :l OFFSET :o";
 
         $stmt = $this->conn->prepare($query);

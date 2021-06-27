@@ -37,17 +37,36 @@ class ProdutoDao extends Dao
         $stmt->execute();
 
         $produtos = [];
-        $pgDaoFactory = new PgDaoFactory();
-        $fornecedorDao = $pgDaoFactory->getFornecedorDao();
+        //$pgDaoFactory = new PgDaoFactory();
+        //$fornecedorDao = $pgDaoFactory->getFornecedorDao();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
-            $fornecedor = $fornecedorDao->getOneById($row['fornecedor']);
+            //$fornecedor = $fornecedorDao->getOneById($row['fornecedor']);
+            $fornecedor = $this->getOneFornecedorById($row['fornecedor']);
             $produto = new Produto($row['id'], $row['nome'], $row['descricao'], $row['foto'], $fornecedor, $row['quantidade'], $row['preco']);
 
             $produtos[] = $produto;
         }
         return $produtos;
+    }
+
+    public function getOneFornecedorById($id)
+    {
+        $query = "SELECT * FROM w2fornecedor WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $endereco = new Endereco($row['rua'], $row['numero'], $row['complemento'], $row['bairro'], $row['cep'], $row['cidade'], $row['estado']);
+            $fornecedor = new Fornecedor($row['id'], $row['nome'], $row['descricao'], $row['telefone'], $row['email1'], $endereco);
+        }
+
+        return $fornecedor;
     }
 
     public function getOneById($id)
@@ -100,7 +119,7 @@ class ProdutoDao extends Dao
         $stmt->bindValue(":nome", $produto->getNome());
         $stmt->bindValue(":descricao", $produto->getDescricao());
         $stmt->bindValue(":foto", $produto->getFoto());
-        $stmt->bindValue(":fornecedor", $produto->getFornecedor());
+        $stmt->bindValue(":fornecedor", $produto->getFornecedor()->getId());
         $stmt->bindValue(":quantidade", $produto->getEstoque()->getQuantidade());
         $stmt->bindValue(":preco", $produto->getEstoque()->getPreco());
 

@@ -182,3 +182,36 @@
 .consulta-pedido-editar{
   margin-bottom: 2%;
 }
+
+.produto-imagem {
+  width: 150px;
+  height: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--light-green);
+  object-fit: cover;
+}
+
+.edit-imagem-produto {
+  position: relative;
+  float: right;
+  right: 50px;
+  bottom: 50px;
+}
+.icon-button {
+  text-decoration: none;
+}
+
+.botao-paginacao {
+  border: none;
+  outline: none;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.botao-paginacao:hover {
+  color: white;
+}

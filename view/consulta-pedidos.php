@@ -18,7 +18,9 @@ include("navbar.php");
 $pgDaoFactory = new PgDaoFactory();
 $daoF = $pgDaoFactory->getPedidoDao();
 $pedidos = $daoF->getAll();
+//$pedidos = $daoF->getAllWithPagination(2,0);
 
+$tamanhoPagina = 5;
 ?>
 
 <body>
@@ -66,13 +68,16 @@ $pedidos = $daoF->getAll();
                         </table>
                         <div class="tabela scrollable">
                             <table class="table table-hover table-striped table-bordered table-condensed">
-                                <tbody>
+                                <tbody id='tabela-inicial'>
                                     <?php
+                                    $atual = 0;
                                     foreach ($pedidos as $linha) {
 
+                                        if ($atual == $tamanhoPagina) break;
+                                        $atual = $atual + 1;
                                         $valor = 0;
-                                        foreach($linha->getItens() as $linha2){
-                                            $valor = $valor + ( $linha2->getPreco() * $linha2->getQuantidade() );
+                                        foreach ($linha->getItens() as $linha2) {
+                                            $valor = $valor + ($linha2->getPreco() * $linha2->getQuantidade());
                                         }
                                         echo '<tr class="clickable-row">';
                                         echo '<td class="consulta-pedido-tabela-col1">' . $linha->getNumero() . '</td>';
@@ -85,9 +90,26 @@ $pedidos = $daoF->getAll();
                                     }
                                     ?>
                                 </tbody>
+                                <?php
+                                echo "<div id='div_pedido'></div>";
+                                ?>
                             </table>
                         </div>
                     </div>
+
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <?php
+                            $paginaAtual = 1;
+                            $totalPaginas = intdiv(sizeof($pedidos), $tamanhoPagina);
+                            if (sizeof($pedidos) % $tamanhoPagina != 0) $totalPaginas = $totalPaginas + 1;
+                            do {
+                                echo '<li class="botao-paginacao""><a class="page-link" id="pag' . $paginaAtual . '" >' . $paginaAtual . '</a></li>';
+                                $paginaAtual = $paginaAtual + 1;
+                            } while ($totalPaginas >= $paginaAtual);
+                            ?>
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div class="col-md-2">

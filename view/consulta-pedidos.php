@@ -17,8 +17,25 @@ include("navbar.php");
 
 $pgDaoFactory = new PgDaoFactory();
 $daoF = $pgDaoFactory->getPedidoDao();
-$pedidos = $daoF->getAll();
-//$pedidos = $daoF->getAllWithPagination(2,0);
+$pedidosA = $daoF->getAll();
+
+$numero = @$_GET["numero"];
+$nome = @$_GET["nome"];
+$pedidos = [];
+
+foreach ($pedidosA as $linha) {
+    if (!empty($_GET["numero"])) {
+        if ($linha->getNumero() != $_GET["numero"]) {
+            continue;
+        }
+    }
+    if (!empty($_GET["nome"])) {
+        if ($linha->getCliente()->getNome() != $_GET["nome"]) {
+            continue;
+        }
+    }
+    $pedidos[] = $linha;
+}
 
 $tamanhoPagina = 5;
 ?>
@@ -31,25 +48,27 @@ $tamanhoPagina = 5;
             <div class="col-md-8">
                 <div class="container-fluid border ">
                     <div class="col-md-12 consulta-pedidos-pesquisar">
-                        <div class="form-row row">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="numero">Número pedido</label>
-                                    <input type="text" class="form-control" id="numero" name="numero">
+                        <form method="get" action="#">
+                            <div class="form-row row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="numero">Número pedido</label>
+                                        <input type="text" class="form-control" id="numero" name="numero" value="<?= $numero ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="nome">Nome cliente</label>
+                                        <input type="nome" class="form-control" id="nome" name="nome" value="<?= $nome ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary botao-pesquisar" value="Pesquisar" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="nome">Nome cliente</label>
-                                    <input type="nome" class="form-control" id="nome" name="nome">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-primary botao-pesquisar" value="Pesquisar" />
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="container-fluid border ">
@@ -104,7 +123,13 @@ $tamanhoPagina = 5;
                             $totalPaginas = intdiv(sizeof($pedidos), $tamanhoPagina);
                             if (sizeof($pedidos) % $tamanhoPagina != 0) $totalPaginas = $totalPaginas + 1;
                             do {
-                                echo '<li class="botao-paginacao""><a class="page-link" id="pag' . $paginaAtual . '" >' . $paginaAtual . '</a></li>';
+                                if($paginaAtual==1){
+                                    echo '<li class="botao-paginacao""><a class="page-link" style="background-color: #6aa84f"; id="pag' . $paginaAtual . '" >' . $paginaAtual . '</a></li>';
+                                }
+                                else{
+                                    echo '<li class="botao-paginacao""><a class="page-link" id="pag' . $paginaAtual . '" >' . $paginaAtual . '</a></li>';
+                                }
+                                
                                 $paginaAtual = $paginaAtual + 1;
                             } while ($totalPaginas >= $paginaAtual);
                             ?>

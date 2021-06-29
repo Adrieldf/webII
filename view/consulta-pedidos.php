@@ -124,7 +124,7 @@ $tamanhoPagina = 5;
                             if (sizeof($pedidos) % $tamanhoPagina != 0) $totalPaginas = $totalPaginas + 1;
                             do {
                                 if($paginaAtual==1){
-                                    echo '<li class="botao-paginacao""><a class="page-link" style="background-color: #6aa84f"; id="pag' . $paginaAtual . '" >' . $paginaAtual . '</a></li>';
+                                    echo '<li class="botao-paginacao""><a class="page-link" style="background-color: #007bff"; id="pag' . $paginaAtual . '" >' . $paginaAtual . '</a></li>';
                                 }
                                 else{
                                     echo '<li class="botao-paginacao""><a class="page-link" id="pag' . $paginaAtual . '" >' . $paginaAtual . '</a></li>';

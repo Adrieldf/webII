@@ -1,9 +1,10 @@
 :root {
-  --dark-green: #6aa84f;
-  --light-green: #b6d7a8;
+  --dark-green: #095cb4;
+  --light-green: #307dcf;
   --light-text: white;
   --dark-text: black;
-  --green: #8ed670;
+  --green: #007bff;
+  
 }
 
 .bg-green {
@@ -19,14 +20,14 @@
 }
 
 .navbar-button {
-  color: var(--dark-text);
-  border-color: var(--dark-text);
+  color: var(--light-text);
+  border-color: var(--light-text);
   background-color: var(--light-green);
 }
 
 .navbar-button:hover {
-  color: var(--dark-text);
-  border-color: var(--dark-text);
+  color: var(--light-text);
+  border-color: var(--light-text);
   background-color: var(--green);
 }
 
@@ -239,7 +240,7 @@
   width: 30%;
   float: left;
   padding: 20px;
-  border: 1px solid #6aa84f;
+  border: 1px solid #095cb4;
   margin-top: 1%;
   margin-bottom: 1%;
   margin-right: 1%;

@@ -9,7 +9,7 @@ $_admin = @$_SESSION["admin"];
 <header>
   <nav class="navbar navbar-expand-lg navbar-light navbar-bg">
     <div class="container-fluid">
-      <a class="navbar-brand navbar-title" href="consulta-produtos.php">Loja</a>
+      <a class="navbar-brand navbar-title" href="consulta-produtos.php" style="color:white">Loja Azul</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

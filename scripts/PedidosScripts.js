@@ -96,7 +96,7 @@ function botaoEditar(pedido, cliente, valor, dataPedido, dataEntrega, situacao) 
 }
 
 function botaoEscolhido(numero) {
-    document.getElementById("pag" + numero).style.background = '#6aa84f';//coloca cor no botão selecionado
+    document.getElementById("pag" + numero).style.background = '#007bff';//coloca cor no botão selecionado
     document.getElementById("pag" + paginaAtual).style.background = '#ffffff';//coloca branco no botão anterior
 
     var x = document.getElementById("tabela-inicial");

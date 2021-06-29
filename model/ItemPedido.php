@@ -14,7 +14,8 @@ class ItemPedido
         $this->produto = $produto;
     }
 
-    public function getPedido(){
+    public function getPedido()
+    {
         return $this->pedido;
     }
 
@@ -33,13 +34,25 @@ class ItemPedido
         return $this->produto;
     }
 
-    public function getDadosParaJSON() {
+    public function getDadosParaJSON()
+    {
 
         //$data = ['quantidade' => $this->quantidade, 'preco' => $this->preco,'produto' => $this->preco];
-         $data = 
-            ['imagem' =>  $this->getProduto()->getFoto(),//'<img src="'. $this->getProduto()->getFoto() . '"</img>',
-            'descricao' => $this->getProduto()->getDescricao(),
-            'quantidade' => $this->quantidade, 
+        $data =
+            ['imagem' => $this->getProduto()->getFoto(),//'<img src="'. $this->getProduto()->getFoto() . '"</img>',
+                'descricao' => $this->getProduto()->getDescricao(),
+                'quantidade' => $this->quantidade,
+                'preco' => $this->preco,
+                'valorTotal' => $this->preco * $this->quantidade];
+        return $data;
+    }
+
+    public function getDadosParaJSONSemImagem()
+    {
+
+        //$data = ['quantidade' => $this->quantidade, 'preco' => $this->preco,'produto' => $this->preco];
+        $data = ['descricao' => $this->getProduto()->getDescricao(),
+            'quantidade' => $this->quantidade,
             'preco' => $this->preco,
             'valorTotal' => $this->preco * $this->quantidade];
         return $data;

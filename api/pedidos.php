@@ -10,11 +10,11 @@ $pedidoDao = $factory->getPedidoDao();
 
 switch ($metodo) {
     case 'GET':
-//        if (!empty($_GET["id"])) {
-//            getOneById($pedidoDao, intval($_GET["id"]));
-//        } else {
+        if (!empty($_GET["id"])) {
+            getById($pedidoDao, intval($_GET["id"]));
+        } else {
             getAll($pedidoDao);
-//        }
+        }
         break;
 }
 function getAll($pedidoDao)
@@ -27,4 +27,23 @@ function getAll($pedidoDao)
     $json = stripslashes(json_encode($map, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     echo $json;
     http_response_code(200);
+}
+
+function getById($pedidoDao, $id)
+{
+    $pedidos = $pedidoDao->getAll();
+    $p = null;
+    foreach ($pedidos as $pedido) {
+        if ($pedido->getNumero() == $id) {
+            $p = $pedido;
+        }
+    }
+    if ($p == null) {
+        http_response_code(404);
+    } else {
+        $json = stripslashes(json_encode($p->getDadosParaJSON(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        echo $json;
+        http_response_code(200);
+    }
+
 }

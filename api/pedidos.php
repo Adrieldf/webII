@@ -13,7 +13,11 @@ switch ($metodo) {
         if (!empty($_GET["id"])) {
             getById($pedidoDao, intval($_GET["id"]));
         } else {
-            getAll($pedidoDao);
+            if (!empty($_GET["nome"])) {
+                getByClienteNome($pedidoDao, intval($_GET["nome"]));
+            } else {
+                getAll($pedidoDao);
+            }
         }
         break;
 }
@@ -45,5 +49,22 @@ function getById($pedidoDao, $id)
         echo $json;
         http_response_code(200);
     }
+
+}
+
+function getByClienteNome($pedidoDao, $nome)
+{
+    $pedidos = $pedidoDao->getAll();
+    $map = [];
+    foreach ($pedidos as $pedido) {
+        if ($pedido->getCliente()->getNome() == $nome) {
+            $map[] = $pedido->getDadosParaJSON();
+        }
+    }
+
+    $json = stripslashes(json_encode($map, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    echo $json;
+    http_response_code(200);
+
 
 }

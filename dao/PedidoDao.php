@@ -62,7 +62,6 @@ class PedidoDao extends Dao
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row) {
-            $pgDaoFactory = new PgDaoFactory();
             $fornecedor = $this->getOneFornecedorById($row['fornecedor']);
             $produto = new Produto($row['id'], $row['nome'], $row['descricao'], $row['foto'], $fornecedor, $row['quantidade'], $row['preco']);
         }
@@ -207,6 +206,14 @@ class PedidoDao extends Dao
             $pedidosJSON[] = $pedido->getDadosParaJSON();
         }
         return stripslashes(json_encode($pedidosJSON, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
+
+    public function setItensJSON($itens){
+        $itensJSON = array();
+        foreach ($itens as $item) {
+            $itensJSON[] = $item->getDadosParaJSON();
+        }
+        return stripslashes(json_encode($itensJSON,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 
     public function getAllByClienteNomeContainingWithPagination($nome, $limit, $offset)

@@ -18,6 +18,8 @@ $pgDaoFactory = new PgDaoFactory();
 $dao = $pgDaoFactory->getProdutoDao();
 $produtos = $dao->getAll();
 
+$today = date("y-m-d");
+@$_SESSION["carrinho"] = new Pedido(NULL,$today,$today,"NOVO",@$_SESSION["id_cliente"],NULL);
 ?>
 
 <body>
@@ -37,7 +39,7 @@ $produtos = $dao->getAll();
                             echo '<div class="produto-desc"><p class="texto-centralizado">' . $linha->getDescricao() . '</p></div>';
                             echo '<div class="produto-info"><h6 class="texto-centralizado">R' . $linha->getEstoque()->getPreco() . '</h6></div>';
                             echo '<div class="produto-info"><input type="submit" onclick="adicionaAoCarrinho(
-                                \'' . $linha->getFoto() . '\',\'' . $linha->getDescricao() . '\',\'' . $linha->getEstoque()->getPreco() . '\'' . ')" class="btn btn-primary" value="Adicionar ao carrinho" /></div>';
+                                \'' . $linha->getFoto() . '\',\'' . $linha->getDescricao() . '\',\'' . $linha->getEstoque()->getPreco() . '\',' . $linha->getId(). ')" class="btn btn-primary" value="Adicionar ao carrinho" /></div>';
                             echo '</div>';
 
                             $inicio = $inicio + 1;

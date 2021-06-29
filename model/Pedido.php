@@ -50,19 +50,27 @@ class Pedido
     {
         return $this->itens;
     }
-    public function getDadosParaJSON() {
+
+    public function getDadosParaJSON()
+    {
 
         $valor = 0;
         foreach ($this->getItens() as $linha2) {
             $valor = $valor + ($linha2->getPreco() * $linha2->getQuantidade());
         }
-         $data = 
-            ['pedido'   => $this->getNumero(),
-             'cliente'  => $this->getCliente()->getNome(),
-             'dataP'    => $this->getDataPedido(),
-             'dataE'    => $this->getDataEntrega(),
-             'valor'    => $valor,
-             'situacao' => $this->getSituacao()];
+        $itensJson = [];
+        foreach ($this->getItens() as $linha) {
+            $itensJson[] = $linha->getDadosParaJSONSemImagem();
+        }
+
+        $data = ['pedido' => $this->getNumero(),
+            'cliente' => $this->getCliente()->getNome(),
+            'dataP' => $this->getDataPedido(),
+            'dataE' => $this->getDataEntrega(),
+            'itens' => $itensJson,
+            'valor' => $valor,
+            'situacao' => $this->getSituacao()];
+
         return $data;
     }
 }

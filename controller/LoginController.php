@@ -24,8 +24,10 @@ if ($cliente) {
     if (strcmp($senha, $cliente->getSenha())) {
         $_SESSION["id_cliente"] = $cliente->getId();
         $_SESSION["nome_cliente"] = stripslashes($cliente->getNome());
+      
+        $_SESSION["admin"] = $cliente->getEmail() == "adm@a.com" ? true : false;
         echo "<script> console.log('Login feito com sucesso! cliente: ' " .  $_SESSION['nome_cliente'] . " </script>";
-        header("Location: ../view/index.php");
+        header("Location: ../view/consulta-produtos.php");
         exit;
     } else {
         $problemas = TRUE;
@@ -35,8 +37,8 @@ if ($cliente) {
 }
 
 if ($problemas == TRUE) {
-    echo "Problema ao fazer login, tente de novo!"; 
-     echo "<script> console.log('Problema ao fazer login! cliente: ' " .  $_SESSION['nome_cliente'] . " </script>";
+    echo "Problema ao fazer login, tente de novo!";
+    echo "<script> console.log('Problema ao fazer login! cliente: ' " .  $_SESSION['nome_cliente'] . " </script>";
     header("Location: ../view/login.php");
     exit;
 }

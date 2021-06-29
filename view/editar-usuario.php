@@ -37,7 +37,7 @@ if (!is_null($idCliente)) {
     $cliente = $dao->getOneById($idCliente);
     if (is_null($cliente)) {
         echo "<script type='javascript'>alert('Erro ao carregar dados do cliente!');";
-        header("Location: ../view/index.php");
+        header("Location: ../view/consulta-produtos.php");
         exit;
     }
 

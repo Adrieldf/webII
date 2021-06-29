@@ -33,6 +33,15 @@ $_admin = @$_SESSION["admin"];
           <div class="d-flex">
             <button class="btn btn-outline-success navbar-button" onclick="window.location.href='editar-usuario.php?id=<?= $idCliente ?>';"> <?= $nomeCliente ?> </button>
             &nbsp;
+            <button class="btn btn-outline-success navbar-button" onclick="window.location.href='consulta-pedidos.php';"> Pedidos</button>
+            <?php if ($_admin != "" && $_admin) : ?>
+              &nbsp;
+              <button class="btn btn-outline-success navbar-button" onclick="window.location.href='cadastro-fornecedor.php';">Fornecedores</button>
+              &nbsp;
+              <button class="btn btn-outline-success navbar-button" onclick="window.location.href='cadastro-produtos.php';">Produtos</button>
+
+            <?php endif; ?>
+            &nbsp;
             <button class="btn btn-outline-success navbar-button" onclick="window.location.href='../controller/LogoutController.php';">Sair</button>
           </div>
         <?php else : ?>
@@ -42,13 +51,7 @@ $_admin = @$_SESSION["admin"];
             <button class="btn btn-outline-success navbar-button" onclick="window.location.href='login.php';">Login</button>
           </div>
         <?php endif; ?>
-        <?php if ($_admin != "" && $_admin) : ?>
-          &nbsp;
-          <button class="btn btn-outline-success navbar-button" onclick="window.location.href='cadastro-fornecedor.php';">Fornecedores</button>
-          &nbsp;
-          <button class="btn btn-outline-success navbar-button" onclick="window.location.href='cadastro-produtos.php';">Produtos</button>
 
-        <?php endif; ?>
       </div>
     </div>
 </header>

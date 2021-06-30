@@ -157,14 +157,14 @@ class PedidoDao extends Dao
         {
     
            $query = "INSERT INTO w2itenspedido " .
-                " (id_pedido, id_produto, quantidade, preco) VALUES" .
-               " (:id_pedido, :id_produto, :quantidade, :preco)";
+                " (pedido_numero, produto_id, quantidade, preco) VALUES" .
+               " (:pedido_numero, :produto_id, :quantidade, :preco)";
     
             $stmt = $this->conn->prepare($query);
     
             //bind
-            $stmt->bindValue(":id_pedido", $idPedido);
-            $stmt->bindValue(":id_produto", $item->getProduto()->getId());
+            $stmt->bindValue(":pedido_numero", $idPedido);
+            $stmt->bindValue(":produto_id", $item->getProduto()->getId());
             $stmt->bindValue(":quantidade", $item->getQuantidade());
             $stmt->bindValue(":preco", $item->getPreco());
     

@@ -18,8 +18,7 @@ $pgDaoFactory = new PgDaoFactory();
 $dao = $pgDaoFactory->getProdutoDao();
 $produtos = $dao->getAll();
 
-$today = date("y-m-d");
-@$_SESSION["carrinho"] = new Pedido(NULL,$today,$today,"NOVO",@$_SESSION["id_cliente"],NULL);
+@$_SESSION["carrinho"] = [];
 ?>
 
 <body>
@@ -49,7 +48,7 @@ $today = date("y-m-d");
                             echo '<div class="produto-desc"><p class="texto-centralizado">' . $linha->getDescricao() . '</p></div>';
                             echo '<div class="produto-info"><h6 class="texto-centralizado">R' . $linha->getEstoque()->getPreco() . '</h6></div>';
                             echo '<div class="produto-info"><input type="submit" onclick="adicionaAoCarrinho(
-                                \'' . $linha->getFoto() . '\',\'' . $linha->getDescricao() . '\',\'' . $linha->getEstoque()->getPreco() . '\'' . ')" class="btn btn-primary" value="Adicionar ao carrinho" /></div>';
+                                \'' . $linha->getFoto() . '\',\'' . $linha->getDescricao() . '\',\'' . $linha->getEstoque()->getPreco() . '\',' . $linha->getId(). ')" class="btn btn-primary" value="Adicionar ao carrinho" /></div>';
                             echo '</div>';
                             $inicio = $inicio + 1;
                         } else {
@@ -58,7 +57,7 @@ $today = date("y-m-d");
                             echo '<div class="produto-desc"><p class="texto-centralizado">' . $linha->getDescricao() . '</p></div>';
                             echo '<div class="produto-info"><h6 class="texto-centralizado">R' . $linha->getEstoque()->getPreco() . '</h6></div>';
                             echo '<div class="produto-info"><input type="submit" onclick="adicionaAoCarrinho(
-                                \'' . $linha->getFoto() . '\',\'' . $linha->getDescricao() . '\',\'' . $linha->getEstoque()->getPreco() . '\'' . ')" class="btn btn-primary" value="Adicionar ao carrinho" /></div>';
+                                \'' . $linha->getFoto() . '\',\'' . $linha->getDescricao() . '\',\'' . $linha->getEstoque()->getPreco() . '\',' . $linha->getId(). ')" class="btn btn-primary" value="Adicionar ao carrinho" /></div>';
                             echo '</div>';
                             echo '</div>';
                             $inicio = 1;
@@ -74,11 +73,13 @@ $today = date("y-m-d");
             <div class="footer" id="footer" style="display:none">
                 <div class="container-fluid border">
                     <h3> Carrinho</h3>
+                    <h3 id="valorTotal"></h3>
                     <div class="ex1">
                         <?php
                         echo "<div id='div_carrinho'></div>";
                         ?>
                     </div>
+                    <input type="submit" class="btn btn-primary" onclick="finalizaPedido()" value="Finalizar pedido">
                 </div>
             </div>
         </div>

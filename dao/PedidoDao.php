@@ -130,46 +130,46 @@ class PedidoDao extends Dao
         return false;
     }
 
-    //    public function insert($pedido)
-    //    {
-    //        $query = "INSERT INTO " .
-    //            $this->table_name .
-    //            " (datapedido, dataentrega, situacao, id_cliente) VALUES" .
-    //            " (:datapedido, :dataentrega, :situacao, :id_cliente)";
-    //
-    //        $stmt = $this->conn->prepare($query);
-    //
-    //        //bind
-    //        $stmt->bindValue(":datapedido", $pedido->getDataPedido());
-    //        $stmt->bindValue(":dataentrega", $pedido->getDataEntrega());
-    //        $stmt->bindValue(":situacao", $pedido->getSituacao());
-    //        $stmt->bindValue(":id_cliente", $pedido->getCliente()->getId());
-    //
-    //        $stmt->execute();
-    //        $id = $this->conn->lastInsertId();
-    //
-    //        foreach ($pedido->getItens as $item) {
-    //            $this->insertItem($item, $id);
-    //        }
-    //    }
+        public function insert($pedido)
+        {
+            $query = "INSERT INTO " .
+               $this->table_name .
+                " (datapedido, dataentrega, situacao, id_cliente) VALUES" .
+                " (:datapedido, :dataentrega, :situacao, :id_cliente)";
+    
+            $stmt = $this->conn->prepare($query);
+    
+            //bind
+            $stmt->bindValue(":datapedido", $pedido->getDataPedido());
+            $stmt->bindValue(":dataentrega", $pedido->getDataEntrega());
+            $stmt->bindValue(":situacao", $pedido->getSituacao());
+            $stmt->bindValue(":id_cliente", $pedido->getCliente()->getId());
+    
+            $stmt->execute();
+            $id = $this->conn->lastInsertId();
+    
+            foreach ($pedido->getItens as $item) {
+                $this->insertItem($item, $id);
+            }
+        }
 
-    //    private function insertItem($item, $idPedido)
-    //    {
-    //
-    //        $query = "INSERT INTO w2itenspedido " .
-    //            " (id_pedido, id_produto, quantidade, preco) VALUES" .
-    //            " (:id_pedido, :id_produto, :quantidade, :preco)";
-    //
-    //        $stmt = $this->conn->prepare($query);
-    //
-    //        //bind
-    //        $stmt->bindValue(":id_pedido", $idPedido);
-    //        $stmt->bindValue(":id_produto", $item->getProduto()->getId());
-    //        $stmt->bindValue(":quantidade", $item->getQuantidade());
-    //        $stmt->bindValue(":preco", $item->getPreco());
-    //
-    //        $stmt->execute();
-    //    }
+        private function insertItem($item, $idPedido)
+        {
+    
+           $query = "INSERT INTO w2itenspedido " .
+                " (id_pedido, id_produto, quantidade, preco) VALUES" .
+               " (:id_pedido, :id_produto, :quantidade, :preco)";
+    
+            $stmt = $this->conn->prepare($query);
+    
+            //bind
+            $stmt->bindValue(":id_pedido", $idPedido);
+            $stmt->bindValue(":id_produto", $item->getProduto()->getId());
+            $stmt->bindValue(":quantidade", $item->getQuantidade());
+            $stmt->bindValue(":preco", $item->getPreco());
+    
+            $stmt->execute();
+        }
 
         public function getAllWithPagination($limit, $offset)
         {
@@ -211,7 +211,7 @@ class PedidoDao extends Dao
     public function setItensJSON($itens){
         $itensJSON = array();
         foreach ($itens as $item) {
-            $itensJSON[] = $item->getDadosParaJSON();
+            $itensJSON[] = $item->getCarrinhoDadosParaJSON();
         }
         return stripslashes(json_encode($itensJSON,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }

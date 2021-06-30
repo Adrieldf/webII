@@ -148,7 +148,7 @@ class PedidoDao extends Dao
             $stmt->execute();
             $id = $this->conn->lastInsertId();
     
-            foreach ($pedido->getItens as $item) {
+            foreach ($pedido->getItens() as $item) {
                 $this->insertItem($item, $id);
             }
         }

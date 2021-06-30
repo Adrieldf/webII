@@ -80,10 +80,10 @@ function finalizaPedido(){
             type: 'POST',//Método que está sendo utilizado.
             dataType: 'json',//É o tipo de dado que a página vai retornar.
             url: '../controller/finalizaPedido.php',//Indica a página que está sendo solicitada.
-            //data: { id: id },//Dados para consulta
+            data: { id: 1 },//Dados para consulta
             //função que será executada quando a solicitação for finalizada.
             success: function (msg) {
-
+                window.location = "../view/consulta-produtos.php";
             },
             error: function (jqXhr, textStatus, errorMessage) {
                 alert(errorMessage);

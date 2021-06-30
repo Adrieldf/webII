@@ -15,9 +15,9 @@ foreach ($carrinho as $key => $value) {
     $item = new ItemPedido(33, $value, $produto->getEstoque()->getPreco(), $produto);
     $itens[] = $item;
 }
-$today = date("y-m-d");
+//$today = date("y-m-d");
 $cliente = $dao->getOneClienteById($idCliente);
-$pedido = new Pedido(0,$today,$today,"NOVO",$cliente,$itens);
+$pedido = new Pedido(0,'2021-05-05','2021-05-05',"NOVO",$cliente,$itens);
 
 $resposta = $dao->insert($pedido);
 

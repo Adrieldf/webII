@@ -86,7 +86,8 @@ function finalizaPedido(){
                 window.location = "../view/consulta-produtos.php";
             },
             error: function (jqXhr, textStatus, errorMessage) {
-                alert(errorMessage);
+                //alert(errorMessage);
+                window.location = "../view/consulta-produtos.php";
             }
         });
 }
